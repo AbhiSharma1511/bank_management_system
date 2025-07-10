@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Services</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .service {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      transition: box-shadow 0.3s;
+    }
+
+    .service:hover {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .service h2 {
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+
+    .service p {
+      margin: 0;
+      color: #444;
+    }
+
+    .service a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .service a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar Placeholder -->
+  <div id="navbar"></div>
+
+  <div class="container">
+    <h1>Employee Services</h1>
+
+    <div class="service">
+      <h2>Customer Account Management</h2>
+      <p>Create, view, and update customer accounts. Review account activity and perform account maintenance.</p>
+      <a href="manage_customer.html">Manage Customers →</a>
+    </div>
+
+    <div class="service">
+      <h2>Loan Processing</h2>
+      <p>Review and process loan applications, approve or reject based on criteria, and track repayment schedules.</p>
+      <a href="loan_dashboard.html">Loan Management →</a>
+    </div>
+
+    <div class="service">
+      <h2>Customer Support</h2>
+      <p>Assist customers with issues, answer queries, and escalate cases to higher support tiers if needed.</p>
+      <a href="#">Support Tickets →</a>
+    </div>
+
+    <div class="service">
+      <h2>Reports & Analytics</h2>
+      <p>Access insights and generate reports on accounts, transactions, and loan performance.</p>
+      <a href="#">View Reports →</a>
+    </div>
+  </div>
+
+  <!-- Footer Placeholder -->
+  <div id="footer"></div>
+
+  <script>
+    // Load navbar and footer from parent folder
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("navbar").innerHTML = data);
+
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data);
+  </script>
+
+</body>
+</html>

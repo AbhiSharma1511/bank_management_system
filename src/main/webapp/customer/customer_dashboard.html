@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 { text-align: center; margin-bottom: 30px; }
+    .card {
+      padding: 20px;
+      background: #e9f0ff;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+
+<div id="navbar"></div>
+
+<div class="container">
+  <h1>Welcome, Customer</h1>
+
+  <div class="card">
+    <h2>Account Balance</h2>
+    <p>₹45,000</p>
+  </div>
+
+  <div class="card">
+    <h2>Quick Links</h2>
+    <ul>
+      <li><a href="transfer_money.html">💸 Transfer Money</a></li>
+      <li><a href="transaction_history.html">📄 View Transactions</a></li>
+    </ul>
+  </div>
+</div>
+
+<div id="footer"></div>
+
+<script>
+  fetch("cnavbar.html").then(res => res.text()).then(data => document.getElementById("navbar").innerHTML = data);
+  fetch("footer.html").then(res => res.text()).then(data => document.getElementById("footer").innerHTML = data);
+</script>
+
+</body>
+</html>

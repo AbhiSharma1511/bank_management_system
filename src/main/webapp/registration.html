@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bank Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 400px;
+      margin: 50px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    svg {
+      height: 48px;
+      color: #2563eb;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .link {
+      display: block;
+      margin-top: 15px;
+      text-align: center;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+    </svg>
+
+    <h2>Bank Registration</h2>
+
+    <form id="registrationForm">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" name="firstName" required>
+
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+      <div id="passwordError" class="error"></div>
+
+      <label for="address">Address</label>
+      <textarea id="address" name="address" rows="3" required></textarea>
+
+      <label for="contact">Contact Number</label>
+      <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required>
+
+      <button type="submit">Register</button>
+    </form>
+
+    <a href="login.html" class="link">Already have an account? Login here</a>
+  </div>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const passwordError = document.getElementById('passwordError');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      if (password.value !== confirmPassword.value) {
+        passwordError.textContent = 'Passwords do not match!';
+        return;
+      } else {
+        passwordError.textContent = '';
+      }
+
+      alert('Registration successful!');
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
