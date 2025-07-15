@@ -1,80 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Employee Profile</title>
+  <meta charset="UTF-8" />
+  <title>Employee Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
-
-    .container {
-      max-width: 600px;
-      background: white;
-      padding: 30px;
-      margin: 40px auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
     }
 
-    h1 {
+    
+    .hero {
+      background: #e6f0ff;
       text-align: center;
-      margin-bottom: 20px;
+      padding: 30px 10px;
     }
 
-    .profile-field {
-      margin-bottom: 15px;
+    .hero h2 {
+      margin-bottom: 10px;
+      font-size: 28px;
     }
 
-    .profile-field label {
-      display: block;
-      font-weight: bold;
+    .hero p {
+      font-size: 16px;
+      color: #555;
     }
 
-    .profile-field span {
-      display: block;
-      margin-top: 5px;
-      color: #333;
+    .dashboard {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #003366;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .card a:hover {
+      background: #0056b3;
+    }
+
+    .footer {
+      background: #003366;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Navbar -->
   <div id="navbar"></div>
 
-  <div class="container">
-    <h1>Employee Profile</h1>
-    <div class="profile-field">
-      <label>Employee ID:</label>
-      <span>EMP123</span>
+  <!-- Hero Section -->
+  <div class="hero">
+    <h2>Welcome, <span id="empName">Employee Name</span></h2>
+    <p>Employee ID: <strong id="empId">EMP12345</strong></p>
+  </div>
+
+  <!-- Dashboard Grid -->
+  <div class="dashboard">
+    <div class="card">
+      <h3>Customer Management</h3>
+      <p>View and update customer details.</p>
+      <a href="/Bank_Management_System/manageCustomers">Go</a>
     </div>
-    <div class="profile-field">
-      <label>Full Name:</label>
-      <span>John Doe</span>
+    <div class="card">
+      <h3>Loan Handling</h3>
+      <p>Manage loan approvals and records.</p>
+      <a href="loan_dashboard.html">Go</a>
     </div>
-    <div class="profile-field">
-      <label>Email:</label>
-      <span>john.doe@bank.com</span>
+    <div class="card">
+      <h3>Add New Customer</h3>
+      <p>Register a new customer account.</p>
+      <a href="add_customer.html">Go</a>
     </div>
-    <div class="profile-field">
-      <label>Role:</label>
-      <span>Customer Manager</span>
-    </div>
-    <div class="profile-field">
-      <label>Contact:</label>
-      <span>9876543210</span>
+    <div class="card">
+      <h3>Profile</h3>
+      <p>Update your contact and profile info.</p>
+      <a href="profile.html">Manage</a>
     </div>
   </div>
 
-  <div id="footer"></div>
+  <!-- Footer -->
+  <div class="footer">
+    &copy; 2025 Bank Management System. All rights reserved.
+  </div>
 
+  <!-- Optional: JS to inject session data -->
   <script>
+    // Simulate fetching from session (replace with AJAX if needed)
+    const emp = {
+      name: "Rahul Sharma",
+      id: "14521"
+    };
+
+    document.getElementById("empName").textContent = emp.name;
+    document.getElementById("empId").textContent = emp.id;
+    
+    
     fetch("navbar.html")
       .then(res => res.text())
       .then(data => document.getElementById("navbar").innerHTML = data);
 
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
+    
   </script>
+
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 package com.entity;
 
 public class Employee {
-    private String empId;
+    private int empId;
     private String name;
     private String email;
     private String password;
@@ -10,7 +10,7 @@ public class Employee {
     // Constructors
     public Employee() {}
 
-    public Employee(String empId, String name, String email, String password, String role) {
+    public Employee(int empId, String name, String email, String password, String role) {
         this.empId = empId;
         this.name = name;
         this.email = email;
@@ -18,12 +18,12 @@ public class Employee {
     }
 
     // Getters and Setters
-    public String getEmpId() {
+    public int getEmpId() {
         return empId;
     }
 
-    public void setEmpId(String empId) {
-        this.empId = empId;
+    public void setEmpId(int i) {
+        this.empId = i;
     }
 
     public String getName() {

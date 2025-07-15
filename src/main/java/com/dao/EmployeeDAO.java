@@ -1,13 +1,21 @@
 package com.dao;
 
+import com.entity.Customer;
 import com.entity.Employee;
 import java.util.List;
 
-public interface EmployeeDAO {
+public interface EmployeeDAO { 
+	
+	
     Employee login(String empId, String password);
-    Employee getEmployeeById(String empId);
-    List<Employee> getAllEmployees();
-    boolean addEmployee(Employee emp);
-    boolean deleteEmployee(String empId);
-    boolean isEmployeeIdExists(int id);
+     Employee getEmployeeData();
+     boolean updateEmployeeData();
+    
+    // customer management apis
+    
+    
+    //loan management
+    
+    
+    
 }
