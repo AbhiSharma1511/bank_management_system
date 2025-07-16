@@ -11,7 +11,7 @@
     }
 
     .container {
-      max-width: 600px;
+      max-width: 700px;
       background: #fff;
       padding: 30px;
       margin: 40px auto;
@@ -30,7 +30,7 @@
       font-weight: bold;
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -67,24 +67,42 @@
 
   <div class="container">
     <h1>Add New Customer</h1>
-    <form id="customerForm">
-      <label for="customerName">Full Name</label>
-      <input type="text" id="customerName" required>
 
-      <label for="customerEmail">Email</label>
-      <input type="email" id="customerEmail" required>
+    <form action="/Bank_Management_System/addCustomer" method="post">
+      <label for="firstName">First Name</label>
+      <input type="text" name="firstName" required>
 
-      <label for="customerPhone">Phone Number</label>
-      <input type="tel" id="customerPhone" pattern="[0-9]{10}" required>
+      <label for="lastName">Last Name</label>
+      <input type="text" name="lastName" required>
 
-      <label for="customerAddress">Address</label>
-      <textarea id="customerAddress" rows="3" required></textarea>
+      <label for="email">Email</label>
+      <input type="email" name="email" required>
 
-      <label for="openingBalance">Opening Balance (₹)</label>
-      <input type="number" id="openingBalance" min="0" required>
+      <label for="password">Password</label>
+      <input type="password" name="password" required>
+
+      <label for="dob">Date of Birth</label>
+      <input type="date" name="dob" required>
+
+      <label for="contact">Contact Number</label>
+      <input type="tel" name="contact" pattern="[0-9]{10}" required>
+
+      <label for="address">Address</label>
+      <textarea name="address" rows="3" required></textarea>
+
+      <label for="aadhar">Aadhar Number</label>
+      <input type="text" name="aadhar" maxlength="12" required>
+
+      <label for="pan">PAN Number</label>
+      <input type="text" name="pan" maxlength="10" required>
+
+      <label for="accountNo">Account Number</label>
+      <input type="text" name="accountNo" placeholder="Account number will be generate automatically" disabled>
+
+      <label for="balance">Opening Balance (₹)</label>
+      <input type="number" name="balance" min="0" step="0.01" required>
 
       <button type="submit">Add Customer</button>
-      <div class="message" id="successMessage"></div>
     </form>
   </div>
 
@@ -92,7 +110,6 @@
   <div id="footer"></div>
 
   <script>
-    // Load navbar and footer
     fetch("navbar.html")
       .then(res => res.text())
       .then(data => document.getElementById("navbar").innerHTML = data);
@@ -100,23 +117,6 @@
     fetch("footer.html")
       .then(res => res.text())
       .then(data => document.getElementById("footer").innerHTML = data);
-
-    // Form handler
-    document.getElementById("customerForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const name = document.getElementById("customerName").value;
-      const email = document.getElementById("customerEmail").value;
-      const phone = document.getElementById("customerPhone").value;
-      const address = document.getElementById("customerAddress").value;
-      const balance = document.getElementById("openingBalance").value;
-
-      // You can send this data to a backend or store locally
-      console.log("New customer:", { name, email, phone, address, balance });
-
-      document.getElementById("successMessage").textContent = "✅ Customer added successfully!";
-      document.getElementById("customerForm").reset();
-    });
   </script>
 
 </body>

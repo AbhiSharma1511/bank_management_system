@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,7 +107,10 @@
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required>
 
-      <div id="loginError" class="error"></div>
+	<% String error = (String) request.getAttribute("errorMessage"); %>
+	<% if (error != null) { %>
+	      <div id="loginError" class="error"><%= error %></div>
+	<% } %>
 
       <button type="submit">Login</button>
     </form>

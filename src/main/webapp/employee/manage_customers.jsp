@@ -121,7 +121,7 @@ border-radius: 4px;
         <td><%= cust.getEmail() %></td>
         <td>₹<%= cust.getBalance() %></td>
         <td>
-          <a href="ViewCustomerServlet?customerId=<%= cust.getCustomerId() %>" class="btn-view">👁 View</a>
+          <a href="/Bank_Management_System/ViewEditCustomerServlet?customerId=<%= cust.getCustomerId() %>" class="btn-view">👁 View</a>
           <button onclick="confirmDelete(<%= cust.getCustomerId() %>)" class="btn-delete">🗑 Delete</button>
         </td>
       </tr>
@@ -155,7 +155,7 @@ border-radius: 4px;
         <td><%= cust.getFirstName() + " " + cust.getLastName() %></td>
         <td><%= cust.getEmail() %></td>
         <td>
-          <a href="ViewCustomerServlet?customerId=<%= cust.getCustomerId() %>" class="btn-view">👁 View</a>
+          <a href="/Bank_Management_System/ViewEditCustomerServlet?customerId=<%= cust.getCustomerId() %>" class="btn-view">👁 View</a>
           <button onclick="confirmDelete(<%= cust.getCustomerId() %>)" class="btn-delete">🗑 Delete</button>
         </td>
       </tr>
@@ -183,7 +183,7 @@ function searchTable() {
 
 function confirmDelete(customerId) {
   if (confirm("Are you sure you want to delete this customer?")) {
-    window.location.href = 'DeleteCustomerServlet?customerId=' + customerId;
+    window.location.href = '/Bank_Management_System/DeleteCustomerServlet?customerId=' + customerId;
   }
 }
 </script>

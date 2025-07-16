@@ -1,0 +1,43 @@
+package com.controllers.Employee;
+
+import com.dao.CustomerDAO;
+import com.dao.CustomerDAOImpl;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+import java.io.IOException;
+
+@WebServlet("/DeleteCustomerServlet")
+public class DeleteCustomerServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String idParam = request.getParameter("customerId");
+
+        try {
+            int customerId = Integer.parseInt(idParam);
+
+            CustomerDAO dao = new CustomerDAOImpl();
+            boolean success = dao.deleteCustomer(customerId);
+
+            HttpSession session = request.getSession();
+            if (success) {
+                session.setAttribute("message", "✅ Customer deleted successfully.");
+            } else {
+                session.setAttribute("error", "❌ Failed to delete customer.");
+            }
+
+        } catch (NumberFormatException e) {
+            request.getSession().setAttribute("error", "Invalid Customer ID format.");
+        }
+
+        // Redirect back to manage customers page
+        response.sendRedirect(request.getContextPath() + "/manageCustomers");
+    }
+}

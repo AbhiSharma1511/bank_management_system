@@ -28,31 +28,19 @@ public class LoginServlet extends HttpServlet {
         String id = request.getParameter("id");
         String password = request.getParameter("password");
         System.out.println("id: "+id+", passowrd: "+password);
-        rt.print("1 point");
-        rt.print(password);
 
         EmployeeDAO dao = new EmployeeDAOImpl();
         Employee employee = dao.login(id, password);
+        HttpSession session = request.getSession();
        
-        rt.print("2 point");
-        
-        rt.print("  Employee:"+employee);
-        
         if (employee != null) {
-            // Set employee in session
-            HttpSession session = request.getSession();
             session.setAttribute("employee", employee);
-
-            // Redirect to employee dashboard
             response.sendRedirect("employee/employee_home.html");
         } else {
-            // Send back to login with error
-    		rt.print(" Employee Not found");
-    		rt.print(" EmpId:" + id);
-    		rt.print(" Password: "+ password);
-//            request.setAttribute("error", "Invalid Employee ID or Password.");
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("employee/login.html");
-//            dispatcher.forward(request, response);
+            // Do NOT use PrintWriter here
+            request.setAttribute("errorMessage", "❌ Invalid Employee ID or Password.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("employee/login.jsp");
+            dispatcher.forward(request, response);
         }
     }
 	@Override

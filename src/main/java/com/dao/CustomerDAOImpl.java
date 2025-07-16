@@ -4,6 +4,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.entity.Customer;
 import com.utils.DBUtil;
@@ -45,8 +46,10 @@ public class CustomerDAOImpl implements CustomerDAO {
     public boolean addNewCustomer(Customer customer) {
         String sql = "INSERT INTO customer (customer_id, first_name, last_name, email, password, dob, address, contact, aadhar, pan, account_no, balance, active_account) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        int customerId = generateUniqueCustomerId();
+        int accountNo = generateCustomerAccountNo();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, customer.getCustomerId());
+            stmt.setInt(1, customerId);
             stmt.setString(2, customer.getFirstName());
             stmt.setString(3, customer.getLastName());
             stmt.setString(4, customer.getEmail());
@@ -56,9 +59,9 @@ public class CustomerDAOImpl implements CustomerDAO {
             stmt.setString(8, customer.getContact());
             stmt.setString(9, customer.getAadhar());
             stmt.setString(10, customer.getPan());
-            stmt.setString(11, customer.getAccountNo());
+            stmt.setString(11, "ACC"+accountNo);
             stmt.setDouble(12, customer.getBalance());
-            stmt.setBoolean(13, customer.isActiveAccount());
+            stmt.setBoolean(13, false);
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -69,22 +72,13 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean updateCustomerData(Customer customer) {
-        String sql = "UPDATE customer SET first_name=?, last_name=?, email=?, password=?, dob=?, address=?, contact=?, aadhar=?, pan=?, account_no=?, balance=?, active_account=? "
-                   + "WHERE customer_id=?";
+        String sql = "UPDATE customer SET email=?, contact=?, address=?, active_account=? WHERE customer_id=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, customer.getFirstName());
-            stmt.setString(2, customer.getLastName());
-            stmt.setString(3, customer.getEmail());
-            stmt.setString(4, customer.getPassword());
-            stmt.setDate(5, Date.valueOf(customer.getDob()));
-            stmt.setString(6, customer.getAddress());
-            stmt.setString(7, customer.getContact());
-            stmt.setString(8, customer.getAadhar());
-            stmt.setString(9, customer.getPan());
-            stmt.setString(10, customer.getAccountNo());
-            stmt.setDouble(11, customer.getBalance());
-            stmt.setBoolean(12, customer.isActiveAccount());
-            stmt.setInt(13, customer.getCustomerId());
+            stmt.setString(1, customer.getEmail());
+            stmt.setString(2, customer.getContact());
+            stmt.setString(3, customer.getAddress());
+            stmt.setBoolean(4, customer.isActiveAccount());
+            stmt.setInt(5, customer.getCustomerId());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -93,16 +87,19 @@ public class CustomerDAOImpl implements CustomerDAO {
         return false;
     }
 
+
     @Override
     public boolean deleteCustomer(int customerId) {
-    	String sql = "UPDATE customer SET active_account = false WHERE customer_id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM customer WHERE customer_id = ?")) {
+            
             stmt.setInt(1, customerId);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
 
@@ -192,5 +189,37 @@ public class CustomerDAOImpl implements CustomerDAO {
         customer.setActiveAccount(rs.getBoolean("active_account"));
         return customer;
     }
+    
+	
+	private int generateCustomerAccountNo() {
+	    Random rand = new Random();
+	    int id = 1000 + rand.nextInt(9000);
+//	    do {
+//	        id = 1000 + rand.nextInt(9000); // Generates 10000–99999
+//	    } while (isCustomerExists(id));    // Retry until unique
+	    return id;
+	}
+	
+	private int generateUniqueCustomerId() {
+		Random rand = new Random();
+		int id;
+		do {
+			id = 10000 + rand.nextInt(90000); // Generates 10000–99999
+		} while (isCustomerExists(id));    // Retry until unique
+		return id;
+	}
+	
+	private boolean isCustomerExists(int id) {
+	    String sql = "SELECT customer_id FROM customer WHERE customer_id = ?";
+	    try (Connection conn = DBUtil.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setInt(1, id);
+	        ResultSet rs = stmt.executeQuery();
+	        return rs.next();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return true;
+	}
 
 }
