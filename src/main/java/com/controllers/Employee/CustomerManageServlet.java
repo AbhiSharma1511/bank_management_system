@@ -27,11 +27,14 @@ public class CustomerManageServlet extends HttpServlet {
 	    List<Customer> activeList = dao.getAllActiveCustomers();
 	    List<Customer> inactiveList = dao.getAllInactiveCustomers();
 
-	    request.setAttribute("activeCustomers", activeList);
-	    request.setAttribute("inactiveCustomers", inactiveList);
+	    // Store in session instead of request
+	    request.getSession().setAttribute("activeCustomers", activeList);
+	    request.getSession().setAttribute("inactiveCustomers", inactiveList);
 
-	    request.getRequestDispatcher("/employee/manage_customers.jsp").forward(request, response);
+	    // Redirect to JSP
+	    response.sendRedirect(request.getContextPath() + "/employee/manage_customers.jsp");
 	}
+
 
 }
 

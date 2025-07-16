@@ -53,7 +53,6 @@ th {
 }
 
 .add-button {
-	margin-top: 10px;
 	display: inline-block;
 	padding: 10px 15px;
 	background-color: #28a745;
@@ -65,15 +64,39 @@ th {
 .add-button:hover {
 	background-color: #218838;
 }
+.btn-view{
+padding:5px;
+border: 2px solid blue;
+border-radius: 4px;
+text-decoration: none
+}
+.btn-delete{
+padding:5px;
+border: 2px solid red;
+border-radius: 4px;
+text-decoration: none;
+background-color: red;
+color:white
+}
+#searchInput{
+height: min-content;
+border: 2px solid gray;
+border-radius: 4px;
+}
+
+
 </style>
 </head>
 <body>
-<div id="navbar"></div>
+
+<div id="navbar"><%@ include file="navbar.html" %> </div>
 
 <div class="container">
   <h1>Customer Account Management</h1>
 
+
   <input type="text" placeholder="Search by name or email..." id="searchInput" onkeyup="searchTable()">
+
 
   <h2>🟢 Active Customers</h2>
   <table id="activeCustomerTable">
@@ -88,7 +111,7 @@ th {
     </thead>
     <tbody>
     <%
-      List<Customer> activeCustomers = (List<Customer>) request.getAttribute("activeCustomers");
+      List<Customer> activeCustomers = (List<Customer>) session.getAttribute("activeCustomers");
       if (activeCustomers != null) {
         for (Customer cust : activeCustomers) {
     %>
@@ -108,20 +131,22 @@ th {
     %>
     </tbody>
   </table>
+    <a class="add-button" href="add_customer.html">➕ Add New Customer</a>
 
-  <h2>🔴 Inactive Customers</h2>
-  <table id="inactiveCustomerTable">
+ 
+  <h2 style="margin-top: 60px">🔴 Inactive Customers</h2>
+   <table id="inactiveCustomerTable">
     <thead>
       <tr>
         <th>Customer ID</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Balance</th>
+        <th>Account</th>
       </tr>
     </thead>
     <tbody>
     <%
-      List<Customer> inactiveCustomers = (List<Customer>) request.getAttribute("inactiveCustomers");
+      List<Customer> inactiveCustomers = (List<Customer>) session.getAttribute("inactiveCustomers");
       if (inactiveCustomers != null) {
         for (Customer cust : inactiveCustomers) {
     %>
@@ -129,7 +154,10 @@ th {
         <td><%= cust.getCustomerId() %></td>
         <td><%= cust.getFirstName() + " " + cust.getLastName() %></td>
         <td><%= cust.getEmail() %></td>
-        <td>₹<%= cust.getBalance() %></td>
+        <td>
+          <a href="ViewCustomerServlet?customerId=<%= cust.getCustomerId() %>" class="btn-view">👁 View</a>
+          <button onclick="confirmDelete(<%= cust.getCustomerId() %>)" class="btn-delete">🗑 Delete</button>
+        </td>
       </tr>
     <%
         }
@@ -138,19 +166,12 @@ th {
     </tbody>
   </table>
 
-  <a class="add-button" href="add_customer.jsp">➕ Add New Customer</a>
+  
 </div>
 
-<div id="footer"></div>
+<div id="footer"><%@ include file="footer.html" %></div>
 
 <script>
-fetch("employee/navbar.html")
-  .then(res => res.text())
-  .then(data => document.getElementById("navbar").innerHTML = data);
-
-fetch("employee/footer.html")
-  .then(res => res.text())
-  .then(data => document.getElementById("footer").innerHTML = data);
 
 function searchTable() {
   let input = document.getElementById("searchInput").value.toLowerCase();

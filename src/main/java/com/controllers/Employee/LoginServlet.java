@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 
         String id = request.getParameter("id");
         String password = request.getParameter("password");
-        
+        System.out.println("id: "+id+", passowrd: "+password);
         rt.print("1 point");
         rt.print(password);
 
