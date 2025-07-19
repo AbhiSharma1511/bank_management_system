@@ -17,7 +17,7 @@ public interface CustomerDAO {
 	boolean updateCustomerData(Customer customer);
 	boolean addNewCustomer(Customer customer);
 	boolean deleteCustomer(int customerId);
-	boolean setActiveAccount(int customerId); // Set one account active
+	boolean setDeactiveAccount(int customerId); // Set one account active
 	List<Customer> getAllCustomers();
 	List<Customer> getAllActiveCustomers();
 	List<Customer> getAllInactiveCustomers();

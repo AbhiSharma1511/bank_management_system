@@ -7,10 +7,8 @@
   <title>Employee Login</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #eaeaea;
-      margin: 0;
-      padding: 0;
+      background: #3c46a6;
+background: radial-gradient(circle,rgba(60, 70, 166, 1) 0%, rgba(124, 136, 204, 1) 50%, rgba(83, 121, 237, 1) 100%);
     }
 
     .container {
@@ -117,6 +115,7 @@
 
     <!-- Optional: Link to registration or home -->
     <a href="index.html" class="link">Don't have an account? Register here</a>
+    <a href="ResetPassword.jsp" class="link">Forgot Password</a>
   </div>
 
 </body>

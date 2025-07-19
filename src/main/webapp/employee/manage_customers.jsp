@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*, com.entity.Customer" %>
+    pageEncoding="UTF-8" import="java.util.*, com.entity.Customer, com.dao.CustomerDAO, com.dao.CustomerDAOImpl" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +89,18 @@ border-radius: 4px;
 </head>
 <body>
 
-<div id="navbar"><%@ include file="navbar.html" %> </div>
+<%
+List<Customer> activeCustomers = null;
+List<Customer> inactiveCustomers = null;
+if(activeCustomers==null){
+CustomerDAO dao = new CustomerDAOImpl();
+ activeCustomers = dao.getAllActiveCustomers();
+ inactiveCustomers = dao.getAllInactiveCustomers();
+}
+
+%>
+
+<div id="navbar"><%@ include file="enavbar.html" %> </div>
 
 <div class="container">
   <h1>Customer Account Management</h1>
@@ -111,7 +122,7 @@ border-radius: 4px;
     </thead>
     <tbody>
     <%
-      List<Customer> activeCustomers = (List<Customer>) session.getAttribute("activeCustomers");
+       activeCustomers = (List<Customer>) session.getAttribute("activeCustomers");
       if (activeCustomers != null) {
         for (Customer cust : activeCustomers) {
     %>
@@ -146,7 +157,7 @@ border-radius: 4px;
     </thead>
     <tbody>
     <%
-      List<Customer> inactiveCustomers = (List<Customer>) session.getAttribute("inactiveCustomers");
+       inactiveCustomers = (List<Customer>) session.getAttribute("inactiveCustomers");
       if (inactiveCustomers != null) {
         for (Customer cust : inactiveCustomers) {
     %>

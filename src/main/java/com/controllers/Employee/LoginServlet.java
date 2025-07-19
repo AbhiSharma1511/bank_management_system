@@ -30,14 +30,14 @@ public class LoginServlet extends HttpServlet {
         System.out.println("id: "+id+", passowrd: "+password);
 
         EmployeeDAO dao = new EmployeeDAOImpl();
-        Employee employee = dao.login(id, password);
+        boolean isEmployeeExist = dao.login(id, password);
         HttpSession session = request.getSession();
+        System.out.println("Session ID: " + session.getId());
        
-        if (employee != null) {
-            session.setAttribute("employee", employee);
-            response.sendRedirect("employee/employee_home.html");
+        if (isEmployeeExist) {
+            session.setAttribute("employeeId", id);
+            response.sendRedirect("employee_home");
         } else {
-            // Do NOT use PrintWriter here
             request.setAttribute("errorMessage", "❌ Invalid Employee ID or Password.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("employee/login.jsp");
             dispatcher.forward(request, response);

@@ -9,6 +9,7 @@ public interface LoanDAO {
 	    boolean applyLoan(Loan loan);
 	    boolean updateLoanStatus(int loanId, String status);
 	    List<Loan> getLoansByCustomerId(int customerId);
+	    Loan getLoansById(int loanId);
 }
 
 

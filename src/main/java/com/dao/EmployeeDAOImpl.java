@@ -7,23 +7,29 @@ import com.utils.DBUtil;
 public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	@Override
-	public Employee login(String id, String password) {
+	public boolean login(String id, String password) {
 		
-		String sql = "SELECT * FROM employee WHERE id = ? AND password = ?";
+		String sql = "SELECT * FROM employees WHERE id = ? AND password = ?";
 		try (Connection conn = DBUtil.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 			stmt.setString(1, id);
 			stmt.setString(2, password);
-			ResultSet rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				return extractEmployeeFromResultSet(rs);
+			
+			boolean isExist = stmt.execute();
+			if(isExist) {
+				stmt.close();
+				conn.close();
+				return true;
+			}
+			else {
+				throw new Exception();
 			}
 
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 	
 
@@ -36,7 +42,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	    emp.setName(rs.getString("name"));
 	    emp.setEmail(rs.getString("email"));
 	    emp.setPassword(rs.getString("password"));
-	    emp.setRole(rs.getString("role")); // If you have roles like "manager", "staff", etc.
+	    emp.setRole(rs.getString("role"));
+	    emp.setAddress(rs.getString("address"));// If you have roles like "manager", "staff", etc.
+	    emp.setContact(rs.getString("contact"));// If you have roles like "manager", "staff", etc.
 	   
 	    return emp;
 	}
@@ -68,16 +76,92 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	
 	@Override
-	public Employee getEmployeeData() {
-		// TODO Auto-generated method stub
-		return null;
+	public Employee getEmployeeData(int empId) {
+		try {
+			Employee employee = null;
+	        String sql = "select * from employees WHERE id=?";
+	        Connection conn = DBUtil.getConnection();
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setInt(1, empId);
+
+	        ResultSet rt = ps.executeQuery();
+	        if(rt!=null) {
+	        	while(rt.next()) {
+	        		employee = extractEmployeeFromResultSet(rt);
+	        	}
+	        	ps.close();
+	        	conn.close();
+	        	return employee;
+	        }
+	        else {
+	        	throw new Exception();
+	        }
+
+	    } catch (Exception e) {
+	    	System.out.println(e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return null;
 	}
 
 
 	@Override
-	public boolean updateEmployeeData() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateEmployeeData(int id, String contact, String address) {
+
+	    try {
+	        String sql = "UPDATE employees SET contact=?, address=? WHERE id=?";
+	        Connection conn = DBUtil.getConnection();
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, contact);
+	        ps.setString(2, address);
+	        ps.setInt(3, id);
+
+	        int rows = ps.executeUpdate();
+	        if(rows>0) {
+	        	ps.close();
+	        	conn.close();
+	        	return true;
+	        }
+	        else {
+	        	throw new Exception();
+	        }
+
+	    } catch (Exception e) {
+	    	System.out.println(e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return false;
 	}
+	
+	@Override
+	public boolean updatePassword(int empId, String newPassword) {
+
+	    try {
+	    	Connection conn = DBUtil.getConnection();
+	        String sql = "UPDATE employees SET password = ? WHERE id = ?";
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, newPassword);
+	        ps.setInt(2, empId);
+
+	        int rows = ps.executeUpdate();
+	        if(rows>0) {
+	        	ps.close();
+	        	conn.close();
+	        	return true;
+	        }
+	        else {
+	        	throw new Exception();
+	        }
+	    } catch (Exception e) {
+	    	System.out.println(e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return false;
+	}
+
+
 
 }

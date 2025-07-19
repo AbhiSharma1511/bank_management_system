@@ -104,25 +104,18 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
     @Override
-    public boolean setActiveAccount(int customerId) {
-        try {
-            // Step 1: Set all accounts to inactive
-            String deactivateAll = "UPDATE customer SET active_account = false";
-            try (PreparedStatement stmt = conn.prepareStatement(deactivateAll)) {
-                stmt.executeUpdate();
-            }
-
-            // Step 2: Activate the selected account
-            String activateOne = "UPDATE customer SET active_account = true WHERE customer_id = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(activateOne)) {
-                stmt.setInt(1, customerId);
-                return stmt.executeUpdate() > 0;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public boolean setDeactiveAccount(int customerId) {
+    	try (Connection conn = DBUtil.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("update customer set active_account=? WHERE customer_id = ?")) {
+               
+               stmt.setBoolean(1, false);
+               stmt.setInt(2, customerId);
+               int rows = stmt.executeUpdate();
+               return rows > 0;
+           } catch (Exception e) {
+               e.printStackTrace();
+               return false;
+           }
     }
 
     @Override

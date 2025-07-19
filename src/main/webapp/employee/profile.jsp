@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.entity.Customer" %>
-
-<jsp:useBean id="customer" scope="request" class="com.entity.Customer" />
+<%@ page import="com.entity.Employee" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Edit Customer</title>
+  <title>Employee Profile</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -107,48 +105,28 @@
   </style>
 </head>
 <body>
+<% Employee employee = (Employee) session.getAttribute("employee"); %>
 <div><%@ include file="enavbar.html"  %></div>
 <div class="container">
-  <h2 style="">🔍 Customer Profile</h2>
-  <form action="ViewEditCustomerServlet" method="post" id="editForm">
+  <h2 style="">🔍 Employee Profile</h2>
+  <form action="/Bank_Management_System/UpdateEmployeeDetails" method="post" id="editForm">
 
-	<h2 style="background-color: white; color: black; margin-bottom: 5px">Customer Id: ${customer.customerId}</h2>
-	<h2 style="background-color: white; color: black;">Account No: ${customer.accountNo}</h2>
+	<h2 style="background-color: white; color: black; margin-bottom: 5px">Employee Id: <%= employee.getEmpId() %></h2>
 	
-	<input type="hidden" name="customerId" value="${customer.customerId}" />
+	<input type="hidden" name="empId" value="<%= employee.getEmpId() %>" />
 
-    <label>First Name</label>
-    <input type="text" name="firstName" value="${customer.firstName}" readonly />
-
-    <label>Last Name</label>
-    <input type="text" name="lastName" value="${customer.lastName}" readonly />
+    <label>Name</label>
+    <input type="text" name="name" value="<%= employee.getName() %>" readonly />
 
     <label>Email</label>
-    <input type="email" name="email" value="${customer.email}" disabled />
+    <input type="email" name="email" value="<%= employee.getEmail() %>" disabled />
     
-    <label>Date Of Birth</label>
-    <input type="text" name="dob" value="${customer.dob}" disabled />
-
     <label>Contact</label>
-    <input type="text" name="contact" value="${customer.contact}" disabled />
+    <input type="text" name="contact" value="<%= employee.getContact() %>" disabled />
     
-    <label>Aadhar Number</label>
-    <input type="text" name="aadhar" value="${customer.aadhar}" disabled />
-    
-    <label>PAN Number</label>
-    <input type="text" name="pan" value="${customer.pan}" disabled />
-
     <label>Address</label>
-    <input type="text" name="address" value="${customer.address}" disabled />
+    <input type="text" name="address" value="<%= employee.getAddress() %>" disabled />
 
-    <label>Balance (₹)</label>
-    <input type="number" name="balance" value="${customer.balance}" readonly />
-
-    <div class="checkbox-label">
-      <label style="margin-top: 0px; font-size: 20px; color: black;">Active Account</label>
-		<input type="checkbox" name="active" style="width:20px; height:20px;"
-		<% if (customer.isActiveAccount()) { %> checked <% } %> disabled />
-    </div>
 
     <div class="button-group">
   <button type="button" id="editBtn" onclick="enableEditing()">✏ Edit</button>
@@ -164,18 +142,14 @@
 
   window.onload = function () {
     const form = document.getElementById("editForm");
-    originalValues.email = form.querySelector('input[name="email"]').value;
     originalValues.contact = form.querySelector('input[name="contact"]').value;
     originalValues.address = form.querySelector('input[name="address"]').value;
-    originalValues.active = form.querySelector('input[name="active"]').checked;
   };
 
   function enableEditing() {
     const form = document.getElementById("editForm");
-    form.querySelector('input[name="email"]').disabled = false;
     form.querySelector('input[name="contact"]').disabled = false;
     form.querySelector('input[name="address"]').disabled = false;
-    form.querySelector('input[name="active"]').disabled = false;
 
     document.getElementById("saveBtn").style.display = "inline-block";
     document.getElementById("cancelBtn").style.display = "inline-block";
@@ -184,15 +158,11 @@
 
   function disableEditing() {
     const form = document.getElementById("editForm");
-    form.querySelector('input[name="email"]').value = originalValues.email;
     form.querySelector('input[name="contact"]').value = originalValues.contact;
     form.querySelector('input[name="address"]').value = originalValues.address;
-    form.querySelector('input[name="active"]').checked = originalValues.active;
 
-    form.querySelector('input[name="email"]').disabled = true;
     form.querySelector('input[name="contact"]').disabled = true;
     form.querySelector('input[name="address"]').disabled = true;
-    form.querySelector('input[name="active"]').disabled = true;
 
     document.getElementById("saveBtn").style.display = "none";
     document.getElementById("cancelBtn").style.display = "none";

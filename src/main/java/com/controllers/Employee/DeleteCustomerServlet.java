@@ -24,7 +24,7 @@ public class DeleteCustomerServlet extends HttpServlet {
             int customerId = Integer.parseInt(idParam);
 
             CustomerDAO dao = new CustomerDAOImpl();
-            boolean success = dao.deleteCustomer(customerId);
+            boolean success = dao.setDeactiveAccount(customerId);
 
             HttpSession session = request.getSession();
             if (success) {

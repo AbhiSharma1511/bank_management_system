@@ -6,7 +6,7 @@
 
 <style>
 .navbar {
-      background-color: #007bff;
+      background-color: rgb(0, 64, 128);
       padding: 15px 20px;
       display: flex;
       justify-content: space-between;
@@ -27,6 +27,8 @@
 
     .navbar ul li {
       display: inline;
+      margin-left: 20px;
+      
     }
 
     .navbar ul li a {
@@ -34,6 +36,7 @@
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
+      font-size: 18px;
     }
 
     .navbar ul li a:hover {
@@ -45,9 +48,11 @@
 <nav class="navbar">
   <div class="logo">Bank Employee Portal</div>
   <ul>
-    <li><a href="/Bank_Management_System/employee/employee_home.html">Home</a></li>
-    <li><a href="${pageContext.request.contextPath}/employeeProfile">Profile</a></li>
-    <li><a href="e_logout.html">Logout</a></li>
+    <li><a href="/Bank_Management_System/employee_home">Dashboard</a></li>
+    <li><a href="/Bank_Management_System/manageCustomers">Manage Customer</a></li>
+    <li><a href="/Bank_Management_System/employee/manage_transaction.jsp">Transaction Management</a></li>
+    <li><a href="/Bank_Management_System/loan_management">Loan Management</a></li>
+    <li style="margin-left: 50px;"><a href="e_logout.html" >Logout</a></li>
   </ul>
 </nav>
 </body>
