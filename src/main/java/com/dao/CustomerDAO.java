@@ -1,20 +1,15 @@
 package com.dao;
 
 import java.util.List;
+
 import com.entity.Customer;
 
-//List<Customer> getAllCustomer();
-//Customer getCustomerById(String empId);
-//boolean updateCustomerData(Customer customer);
-//boolean addNewCustomer(Customer customer);
-//boolean deleteCustomer(String empId);
-//boolean setActiveAccount();
-//List<Customer> getAllInactiveCustomer();
 
 public interface CustomerDAO {
 
-	Customer login(String empId, String password);
+	boolean login(int customerId, String password);
 	boolean updateCustomerData(Customer customer);
+	boolean updateCustomerDataByCustomer(Customer customer);
 	boolean addNewCustomer(Customer customer);
 	boolean deleteCustomer(int customerId);
 	boolean setDeactiveAccount(int customerId); // Set one account active
@@ -22,5 +17,7 @@ public interface CustomerDAO {
 	List<Customer> getAllActiveCustomers();
 	List<Customer> getAllInactiveCustomers();
 	Customer getCustomerById(int customerId);
+	boolean updateBalance(int customerId, double newBalance);
+	public Customer getCustomerByAccountNo(String accountNo);
 
 }

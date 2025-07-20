@@ -11,7 +11,7 @@ public class Loan {
     private String status;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    
+
 	public Loan() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -85,7 +85,7 @@ public class Loan {
 		this.updatedAt = updatedAt;
 	}
 
-	
+
     // Constructors
-    
+
 }

@@ -17,11 +17,11 @@ public class Customer {
     private String accountNo;
     private double balance;
     private boolean activeAccount;
-    
-    
-    
-    
-	public Customer() {	};
+
+
+
+
+	public Customer() {	}
 
 
 	public Customer(int customerId, String firstName, String lastName, String email, String password, LocalDate dob,
@@ -172,5 +172,5 @@ public class Customer {
 	public void setActiveAccount(boolean activeAccount) {
 		this.activeAccount = activeAccount;
 	}
-    
+
 }

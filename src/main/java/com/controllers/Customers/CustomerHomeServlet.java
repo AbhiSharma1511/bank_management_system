@@ -1,10 +1,10 @@
-package com.controllers.Employee;
+package com.controllers.Customers;
 
 import java.io.IOException;
 
-import com.dao.EmployeeDAO;
-import com.dao.EmployeeDAOImpl;
-import com.entity.Employee;
+import com.dao.CustomerDAO;
+import com.dao.CustomerDAOImpl;
+import com.entity.Customer;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,29 +13,29 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/employee_home")
-public class EmployeeHomeServlet extends HttpServlet {
+@WebServlet("/customer_home")
+public class CustomerHomeServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	    HttpSession session = req.getSession(false);
+		HttpSession session = req.getSession(false);
 
-	    if (session == null || session.getAttribute("employee") == null) {
-	        String empIdStr = (String) session.getAttribute("employeeId");
+	    if (session == null || session.getAttribute("customer") == null) {
+	        String empIdStr = (String) session.getAttribute("customerId");
 
 	        if (empIdStr != null) {
 	            try {
 	                int id = Integer.parseInt(empIdStr);
 	                System.out.println("id: " + id);
 
-	                EmployeeDAO employeeDao = new EmployeeDAOImpl();
-	                Employee employee = employeeDao.getEmployeeData(id);
+	                CustomerDAO customerDao = new CustomerDAOImpl();
+	                Customer customer = customerDao.getCustomerById(id);
 
-	                if (employee != null) {
-	                    session.setAttribute("employee", employee);
-	                    resp.sendRedirect("employee/employee_home.jsp");
+	                if (customer != null) {
+	                    session.setAttribute("customer", customer);
+	                    resp.sendRedirect("customer/customer_home.jsp");
 	                    return;
 	                }
 	            } catch (Exception ex) {
@@ -44,11 +44,10 @@ public class EmployeeHomeServlet extends HttpServlet {
 	        }
 
 	        // If session is invalid or employee not found
-	        resp.sendRedirect("employee/login.jsp"); // redirect to login
+	        resp.sendRedirect("customer/clogin.htm;"); // redirect to login
 	    } else {
-	        resp.sendRedirect("employee/employee_home.jsp");
+	        resp.sendRedirect("customer/customer_home.jsp");
 	    }
-
 	}
 
 }

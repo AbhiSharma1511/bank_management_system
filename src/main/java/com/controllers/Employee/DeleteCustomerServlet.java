@@ -1,13 +1,16 @@
 package com.controllers.Employee;
 
+import java.io.IOException;
+
 import com.dao.CustomerDAO;
 import com.dao.CustomerDAOImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-
-import java.io.IOException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/DeleteCustomerServlet")
 public class DeleteCustomerServlet extends HttpServlet {

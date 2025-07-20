@@ -7,7 +7,6 @@ import com.dao.LoanDAO;
 import com.dao.LoanDAOImpl;
 import com.entity.Loan;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,6 +21,7 @@ public class LoanManagementServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			System.out.println("Loan Management Servlet is called!!");
 			LoanDAO loanDao = new LoanDAOImpl();
 			List<Loan> allLoans = loanDao.getAllLoans();
 
@@ -30,13 +30,13 @@ public class LoanManagementServlet extends HttpServlet {
 
 			// forward to JSP page
 			resp.sendRedirect("employee/loan_management.jsp");
-			
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			req.getSession().setAttribute("msg", "Failed to fetch loans: " + e.getMessage());
 			resp.sendRedirect("employee/manage_customers.jsp");
-			
+
 		}
 	}
 }

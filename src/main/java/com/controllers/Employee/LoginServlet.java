@@ -1,18 +1,18 @@
 package com.controllers.Employee;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.dao.EmployeeDAO;
 import com.dao.EmployeeDAOImpl;
-import com.entity.Employee;
 
-import jakarta.servlet.*;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-		
+
 		PrintWriter rt = response.getWriter();
 
         String id = request.getParameter("id");
@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
         boolean isEmployeeExist = dao.login(id, password);
         HttpSession session = request.getSession();
         System.out.println("Session ID: " + session.getId());
-       
+
         if (isEmployeeExist) {
             session.setAttribute("employeeId", id);
             response.sendRedirect("employee_home");
@@ -46,6 +46,8 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter rt = resp.getWriter();
+		System.out.println("Login Servlet is called");
+		rt.print("Login Servlet");
 		rt.print("Here is the error");
 	}
 }

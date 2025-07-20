@@ -1,7 +1,7 @@
 package com.entity;
 
 public class Employee {
-	
+
 	private int empId;
     private String name;
     private String email;
@@ -9,7 +9,7 @@ public class Employee {
     private String role;
     private String address;
     private String contact;
-    
+
 	public Employee() {
 		super();
 	}
@@ -23,7 +23,7 @@ public class Employee {
 		this.password = password;
 		this.role = role;
 		this.address = address;
-		
+
 		this.contact = contact;
 	}
 
@@ -85,5 +85,5 @@ public class Employee {
 	}
 
     // Constructors
-    
+
 }

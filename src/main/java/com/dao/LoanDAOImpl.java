@@ -1,6 +1,9 @@
 package com.dao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -50,9 +53,10 @@ public class LoanDAOImpl implements LoanDAO {
             	ps.close();
             	con.close();
             	return true;
-            }
-            else throw new Exception();
-            
+            } else {
+				throw new Exception();
+			}
+
         } catch (Exception e) {
         	System.out.println(e.getMessage());
             e.printStackTrace();
@@ -62,7 +66,7 @@ public class LoanDAOImpl implements LoanDAO {
 
     @Override
     public boolean updateLoanStatus(int loanId, String status) {
-        
+
         try (Connection con = DBUtil.getConnection();
              PreparedStatement ps = con.prepareStatement("UPDATE loans SET status = ? WHERE loanId = ?")) {
             ps.setString(1, status);
@@ -104,7 +108,7 @@ public class LoanDAOImpl implements LoanDAO {
         }
         return list;
     }
-    
+
     private int generateLoanId() {
 	    Random rand = new Random();
 	    int id = 10000 + rand.nextInt(9000);

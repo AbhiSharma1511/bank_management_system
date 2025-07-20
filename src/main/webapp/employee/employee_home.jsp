@@ -115,7 +115,7 @@
     <div class="card">
       <h1>Loan Handling</h1>
       <p>Manage loan approvals and records.</p>
-      <a href="loan_management.jsp">Go</a>
+      <a href="/Bank_Management_System/loan_management">Go</a>
     </div>
   </div>
   <div class="card1">
@@ -123,7 +123,7 @@
     <div class="card">
       <h1>Transaction Management</h1>
       <p>Register a new customer account.</p>
-      <a href="manage_transaction.jsp">Go</a>
+      <a href="/Bank_Management_System/viewTransactions">Go</a>
     </div>
     <div class="card">
       <h1>Profile</h1>

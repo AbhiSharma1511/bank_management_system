@@ -16,16 +16,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/AddNewLoan")
 public class AddNewLoanServlet extends HttpServlet {
-	
+
     private static final long serialVersionUID = 1L;
-    
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	System.out.println("Add new servlet called.");
     	PrintWriter rt=  resp.getWriter();
     	rt.print("Add new servlet called.");
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     		throws ServletException, IOException {
@@ -38,28 +38,28 @@ public class AddNewLoanServlet extends HttpServlet {
             System.out.println(customerId);
             System.out.println(customerName);
             System.out.println(loanAmount);
-            
+
             // 2. Create Loan object
             Loan loan = new Loan();
             loan.setCustomerId(customerId);
             loan.setCustomerName(customerName);
             loan.setLoanAmount(loanAmount);
             loan.setStatus("Pending");
-            
+
             System.out.println(loan);
 
             // 3. Save to DB
             LoanDAO loanDao = new LoanDAOImpl();
             boolean success = loanDao.applyLoan(loan);
-            
+
             System.out.println(success);
-            
+
             // 4. Send response
-            
+
             if (success) {
                 request.getSession().setAttribute("loan_apply_msg","Loan Applied Successfully" );
                 response.sendRedirect("loan_management");
-                
+
             } else {
             	request.getSession().setAttribute("loan_apply_msg","Something went wrong" );
                 response.sendRedirect("employee/new_loan.jsp");
@@ -76,6 +76,6 @@ public class AddNewLoanServlet extends HttpServlet {
         }
     }
 
-    
+
 }
 

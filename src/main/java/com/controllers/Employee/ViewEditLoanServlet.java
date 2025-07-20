@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.dao.LoanDAO;
 import com.dao.LoanDAOImpl;
-import com.entity.Customer;
 import com.entity.Loan;
 
 import jakarta.servlet.ServletException;
@@ -18,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 public class ViewEditLoanServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LoanDAO dao = new LoanDAOImpl();
@@ -42,20 +41,21 @@ public class ViewEditLoanServlet extends HttpServlet {
         }
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
             int loanId = Integer.parseInt(request.getParameter("loanId"));
             String status = request.getParameter("status");
-            
+
             // Update the customer via DAO
             System.out.println("LoanId: "+loanId);
             System.out.println("status: "+status);
-            
+
             LoanDAO loanDao = new LoanDAOImpl();
             boolean updated = loanDao.updateLoanStatus(loanId, status);
-            
+
             System.out.println(updated);
-            
+
             HttpSession session = request.getSession();
             if (updated) {
             	System.out.println("Loan status updated");

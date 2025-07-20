@@ -59,7 +59,7 @@ border-radius: 10px
 		<h2 align="center">🔒 Reset Password</h2>
 		<form action="/Bank_Management_System/ResetPasswordServlet"
 			method="post" onsubmit="return validatePassword();">
-			<label>Employee ID:</label> <input type="text" name="empId" required />
+			<label>Employee ID:</label> <input type="text" name="empId" placeHolder="Enter 6 digit Id: 123456" required />
 
 			<label>New Password:</label> 
 			<input id="password" type="password" name="newPassword" required /> 
@@ -84,7 +84,7 @@ border-radius: 10px
 				}
 			%>
 			<div style="margin-top: 20px; text-align: center;">
-				<a href="employee/login.jsp" style="text-decoration: none">Login here!</a>
+				<a href="login.jsp" style="text-decoration: none">Login here!</a>
 			</div>
 		</form>
 	</div>

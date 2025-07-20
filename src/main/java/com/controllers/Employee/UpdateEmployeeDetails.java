@@ -18,13 +18,14 @@ import jakarta.servlet.http.HttpSession;
 public class UpdateEmployeeDetails extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    @Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         try {
         	EmployeeDAO employeeDAO = new EmployeeDAOImpl();
             int empId = Integer.parseInt(request.getParameter("empId"));
-            String address = request.getParameter("address");           
+            String address = request.getParameter("address");
             String contact = request.getParameter("contact");
 
             boolean isUpdated = employeeDAO.updateEmployeeData(empId, contact, address);

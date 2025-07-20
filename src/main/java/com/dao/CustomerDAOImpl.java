@@ -1,7 +1,10 @@
 package com.dao;
 
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,34 +14,30 @@ import com.utils.DBUtil;
 
 public class CustomerDAOImpl implements CustomerDAO {
 
-    private Connection conn;
-
-    public CustomerDAOImpl() {
-        try {
-            this.conn = DBUtil.getConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
     @Override
-    public Customer login(String customerId, String password) {
+    public boolean login(int customerId, String password) {
         String sql = "SELECT * FROM customer WHERE customer_id = ? AND password = ?";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, Integer.parseInt(customerId));
+        try (Connection conn = DBUtil.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, customerId);
             stmt.setString(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return extractCustomerFromResultSet(rs); // This method should map the result to a Customer object
+                	rs.close();
+                	conn.close();
+                    return true;
+                }
+                else {
+                	throw new Exception();
                 }
             }
         } catch (Exception e) {
+        	System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
-        return null; // login failed
+        return false; // login failed
     }
 
 
@@ -48,7 +47,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int customerId = generateUniqueCustomerId();
         int accountNo = generateCustomerAccountNo();
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBUtil.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, customerId);
             stmt.setString(2, customer.getFirstName());
             stmt.setString(3, customer.getLastName());
@@ -64,7 +63,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             stmt.setBoolean(13, false);
 
             return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -73,7 +72,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean updateCustomerData(Customer customer) {
         String sql = "UPDATE customer SET email=?, contact=?, address=?, active_account=? WHERE customer_id=?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBUtil.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, customer.getEmail());
             stmt.setString(2, customer.getContact());
             stmt.setString(3, customer.getAddress());
@@ -81,7 +80,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             stmt.setInt(5, customer.getCustomerId());
 
             return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -92,7 +91,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     public boolean deleteCustomer(int customerId) {
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement("DELETE FROM customer WHERE customer_id = ?")) {
-            
+
             stmt.setInt(1, customerId);
             int rows = stmt.executeUpdate();
             return rows > 0;
@@ -107,7 +106,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     public boolean setDeactiveAccount(int customerId) {
     	try (Connection conn = DBUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("update customer set active_account=? WHERE customer_id = ?")) {
-               
+
                stmt.setBoolean(1, false);
                stmt.setInt(2, customerId);
                int rows = stmt.executeUpdate();
@@ -139,13 +138,13 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Customer getCustomerById(int customerId) {
         String sql = "SELECT * FROM customer WHERE customer_id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBUtil.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, customerId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return extractCustomerFromResultSet(rs);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -154,12 +153,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     // Utility method
     private List<Customer> getCustomerListByQuery(String sql) {
         List<Customer> list = new ArrayList<>();
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = DBUtil.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 list.add(extractCustomerFromResultSet(rs));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -182,8 +181,8 @@ public class CustomerDAOImpl implements CustomerDAO {
         customer.setActiveAccount(rs.getBoolean("active_account"));
         return customer;
     }
-    
-	
+
+
 	private int generateCustomerAccountNo() {
 	    Random rand = new Random();
 	    int id = 1000 + rand.nextInt(9000);
@@ -192,7 +191,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 //	    } while (isCustomerExists(id));    // Retry until unique
 	    return id;
 	}
-	
+
 	private int generateUniqueCustomerId() {
 		Random rand = new Random();
 		int id;
@@ -201,7 +200,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		} while (isCustomerExists(id));    // Retry until unique
 		return id;
 	}
-	
+
 	private boolean isCustomerExists(int id) {
 	    String sql = "SELECT customer_id FROM customer WHERE customer_id = ?";
 	    try (Connection conn = DBUtil.getConnection();
@@ -215,4 +214,84 @@ public class CustomerDAOImpl implements CustomerDAO {
 	    return true;
 	}
 
+	@Override
+    public boolean updateCustomerDataByCustomer(Customer customer) {
+        String sql = "UPDATE customer SET email=?, contact=?, address=? WHERE customer_id=?";
+        try (Connection conn = DBUtil.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, customer.getEmail());
+            stmt.setString(2, customer.getContact());
+            stmt.setString(3, customer.getAddress());
+            stmt.setInt(4, customer.getCustomerId());
+
+            if(stmt.executeUpdate() > 0) {
+            	stmt.close();
+            	conn.close();
+            	return true;
+            }
+            else {
+            	throw new Exception();
+            }
+        } catch (Exception e) {
+        	System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+	@Override
+	public boolean updateBalance(int customerId, double newBalance) {
+
+	    String sql = "UPDATE customer SET balance = ? WHERE customer_id = ?";
+
+	    try (Connection conn = DBUtil.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	        stmt.setDouble(1, newBalance);
+	        stmt.setInt(2, customerId);
+
+	        int rowsAffected = stmt.executeUpdate();
+	        return rowsAffected > 0;
+
+	    } catch (Exception e) {
+	    	System.out.println(e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return false;
+	}
+
+
+
+	@Override
+	public Customer getCustomerByAccountNo(String accountNo) {
+	    String sql = "SELECT * FROM customer WHERE account_no = ?";
+	    Customer customer = new Customer();
+	    try (Connection conn = DBUtil.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setString(1, accountNo);
+	        ResultSet rs = stmt.executeQuery();
+	        if(rs.next()) {
+	        	customer = extractCustomerFromResultSet(rs);
+	        	rs.close();
+	        	conn.close();
+	        	return customer;
+	        }
+	    } catch (Exception e) {
+	    	System.out.println(e.getMessage());
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
