@@ -109,7 +109,7 @@
 <div><%@ include file="enavbar.html"  %></div>
 <div class="container">
   <h2 style="">🔍 Employee Profile</h2>
-  <form action="/Bank_Management_System/UpdateEmployeeDetails" method="post" id="editForm">
+  <form action="/Bank_Management_System/UpdateEmployeeDetails" method="post" id="editForm" onsubmit="return validateForm()">
 
 	<h2 style="background-color: white; color: black; margin-bottom: 5px">Employee Id: <%= employee.getEmpId() %></h2>
 	
@@ -122,8 +122,9 @@
     <input type="email" name="email" value="<%= employee.getEmail() %>" disabled />
     
     <label>Contact</label>
-    <input type="text" name="contact" value="<%= employee.getContact() %>" disabled />
-    
+	<input type="text" id="contact" name="contact" value="<%= employee.getContact()%>" disabled />
+	<span id="contactError" style="color:red; font-size: 14px;"></span>
+	
     <label>Address</label>
     <input type="text" name="address" value="<%= employee.getAddress() %>" disabled />
 
@@ -168,6 +169,33 @@
     document.getElementById("cancelBtn").style.display = "none";
     document.getElementById("editBtn").style.display = "inline-block";
   }
+  
+
+	function isValidContact(contact) {
+	  const regex = /^[6-9][0-9]{9}$/;
+	  return regex.test(contact);
+	}
+
+	function validateForm() {
+	  
+	  const contactInput = document.getElementById("contact").value.trim();
+	  
+	  const contactError = document.getElementById("contactError");
+
+	  let isValid = true;
+
+	  // Email validation
+	 
+	  // Contact validation
+	  if (!isValidContact(contactInput)) {
+	    contactError.textContent = "❌ Enter a 10-digit mobile number starting with 6, 7, 8, or 9";
+	    isValid = false;
+	  } else {
+	    contactError.textContent = "";
+	  }
+
+	  return isValid;
+	}
 </script>
 
 

@@ -86,7 +86,7 @@ align-items: center;
 		<%
 		Customer customer = (Customer) session.getAttribute("customer");
 		if (session == null || session.getAttribute("customer") == null) {
-	        response.sendRedirect("customer/clogin.html"); // redirect to login if no session
+	        response.sendRedirect("customer/clogin.jsp"); // redirect to login if no session
 	        return;
 	    }
 		%>
@@ -146,7 +146,7 @@ align-items: center;
 				<div class="card quick-link-card">
 					<h2>🛠</h2>
 					<p>
-						<a href="support_request.jsp">Support Request</a>
+						<a href="support_request.html">Support Request</a>
 					</p>
 				</div>
 			</div>

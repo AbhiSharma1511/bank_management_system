@@ -49,6 +49,7 @@ public class CustomerLoginServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("customer/clogin.jsp"); // ✅ change path if needed
             dispatcher.forward(request, response);
         }
+        
     }
 
     @Override

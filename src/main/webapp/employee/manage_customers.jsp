@@ -88,6 +88,11 @@ border-radius: 4px;
 </style>
 </head>
 <body>
+<%
+if(session==null || session.getAttribute("employee")==null){
+	response.sendRedirect("/Bank_Management_System/employee/login.jsp");
+}
+%>
 
 <%
 List<Customer> activeCustomers = null;
@@ -133,7 +138,7 @@ CustomerDAO dao = new CustomerDAOImpl();
         <td>₹<%= cust.getBalance() %></td>
         <td>
           <a href="/Bank_Management_System/ViewEditCustomerServlet?customerId=<%= cust.getCustomerId() %>" class="btn-view">👁 View</a>
-          <button onclick="confirmDelete(<%= cust.getCustomerId() %>)" class="btn-delete">🗑 Delete</button>
+          <button onclick="deactivateAccount(<%= cust.getCustomerId() %>)" class="btn-delete">🗑 Delete</button>
         </td>
       </tr>
     <%
@@ -194,9 +199,16 @@ function searchTable() {
 
 function confirmDelete(customerId) {
   if (confirm("Are you sure you want to delete this customer?")) {
-    window.location.href = '/Bank_Management_System/DeleteCustomerServlet?customerId=' + customerId;
+    window.location.href = '/Bank_Management_System/deleteCustomer?customerId=' + customerId;
   }
 }
+
+function deactivateAccount(cusomerId){
+	if (confirm("Are you sure you want to deactive this customer?")) {
+	    window.location.href = '/Bank_Management_System/deactiveCustomer?customerId=' + customerId;
+	  }
+}
+
 </script>
 
 </body>

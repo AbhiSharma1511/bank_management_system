@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/deleteCustomer")
-public class DeleteCustomerServlet extends HttpServlet {
+@WebServlet("/deactiveCustomer")
+public class DeactivateCustomerAccountServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,13 +30,13 @@ public class DeleteCustomerServlet extends HttpServlet {
             
             
             
-            boolean success = dao.deleteCustomer(customerId);
-            System.out.println("Customer deletion: "+success);
+            boolean success = dao.setDeactiveAccount(customerId);
+            System.out.println("Customer deactive: "+success);
             HttpSession session = request.getSession();
             if (success) {
-                session.setAttribute("message", "✅ Customer deleted successfully.");
+                session.setAttribute("message", "✅ Customer deactived successfully.");
             } else {
-                session.setAttribute("error", "❌ Failed to delete customer.");
+                session.setAttribute("error", "❌ Failed to deactive customer.");
             }
 
         } catch (NumberFormatException e) {

@@ -110,7 +110,7 @@
 <div><%@ include file="enavbar.html"  %></div>
 <div class="container">
   <h2 style="">🔍 Customer Profile</h2>
-  <form action="ViewEditCustomerServlet" method="post" id="editForm">
+  <form action="ViewEditCustomerServlet" method="post" id="editForm" onsubmit="return validateForm()">
 
 	<h2 style="background-color: white; color: black; margin-bottom: 5px">Customer Id: ${customer.customerId}</h2>
 	<h2 style="background-color: white; color: black;">Account No: ${customer.accountNo}</h2>
@@ -124,13 +124,15 @@
     <input type="text" name="lastName" value="${customer.lastName}" readonly />
 
     <label>Email</label>
-    <input type="email" name="email" value="${customer.email}" disabled />
-    
+	<input type="email" id="email" name="email" value="${customer.email}" disabled />
+	<span id="emailError" style="color:red; font-size: 14px;"></span>
+	
+	<label>Contact</label>
+	<input type="text" id="contact" name="contact" value="${customer.contact}" disabled />
+	<span id="contactError" style="color:red; font-size: 14px;"></span>
+	
     <label>Date Of Birth</label>
     <input type="text" name="dob" value="${customer.dob}" disabled />
-
-    <label>Contact</label>
-    <input type="text" name="contact" value="${customer.contact}" disabled />
     
     <label>Aadhar Number</label>
     <input type="text" name="aadhar" value="${customer.aadhar}" disabled />
@@ -198,6 +200,44 @@
     document.getElementById("cancelBtn").style.display = "none";
     document.getElementById("editBtn").style.display = "inline-block";
   }
+  
+  	function isValidEmail(email) {
+	  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.(com|in|org|net|gov|edu|co\.in|info)$/i;
+	  return regex.test(email);
+	}
+
+	function isValidContact(contact) {
+	  const regex = /^[6-9][0-9]{9}$/;
+	  return regex.test(contact);
+	}
+
+	function validateForm() {
+	  const emailInput = document.getElementById("email").value.trim();
+	  const contactInput = document.getElementById("contact").value.trim();
+	  const emailError = document.getElementById("emailError");
+	  const contactError = document.getElementById("contactError");
+
+	  let isValid = true;
+
+	  // Email validation
+	  if (!isValidEmail(emailInput)) {
+	    emailError.textContent = "❌ Please enter a valid email like abc@example.com";
+	    isValid = false;
+	  } else {
+	    emailError.textContent = "";
+	  }
+
+	  // Contact validation
+	  if (!isValidContact(contactInput)) {
+	    contactError.textContent = "❌ Enter a 10-digit mobile number starting with 6, 7, 8, or 9";
+	    isValid = false;
+	  } else {
+	    contactError.textContent = "";
+	  }
+
+	  return isValid;
+	}
+
 </script>
 
 

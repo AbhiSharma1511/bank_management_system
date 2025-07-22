@@ -37,16 +37,3 @@ public class CustomerManageServlet extends HttpServlet {
 
 
 }
-
-//<c:forEach var="cust" items="${activeCustomers}">
-//<tr>
-//	<td>${cust.customerId}</td>
-//	<td>${cust.firstName}${cust.lastName}</td>
-//	<td>${cust.email}</td>
-//	<td>₹${cust.balance}</td>
-//	<td><a href="ViewCustomerServlet?customerId=101"
-//		class="btn-view">👁 View</a>
-//		<button onclick="confirmDelete(customerId)" class="btn-delete">🗑
-//			Delete</button></td>
-//</tr>
-//</c:forEach>

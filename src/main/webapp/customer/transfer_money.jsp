@@ -68,7 +68,7 @@ button:hover {
 	<div id="navbar"><%@ include file="navbar.html"%></div>
 	<%
 	if (session == null || session.getAttribute("customer") == null) {
-		response.sendRedirect("clogin.html");
+		response.sendRedirect("clogin.jsp");
 		return;
 	}
 	%>

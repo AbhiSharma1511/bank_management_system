@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,6 +90,14 @@
 </head>
 <body>
 
+<% 
+String msg ="";
+String message = (String) request.getAttribute("errorMessage");
+if(message!=null){
+	msg = message;
+}
+%>
+
 <div class="div1" style="margin-left: 20px; margin-top: 20px;">
 <a href="/Bank_Management_System"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -113,6 +123,10 @@
       <input type="password" id="custPassword" name="custPassword" required>
 
       <div id="loginError" class="error"></div>
+      
+      <div style="text-align: center; margin-bottom: 10px;">
+      	<p style="margin: 5px; color: red;"><%= msg %></p>
+      </div>
 
       <button type="submit">Login</button>
     </form>
