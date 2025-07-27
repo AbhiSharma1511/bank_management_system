@@ -6,7 +6,6 @@ public class Loan {
 
 	private int loanId;
     private int customerId;
-    private String customerName;
     private double loanAmount;
     private String status;
     private Timestamp createdAt;
@@ -17,12 +16,11 @@ public class Loan {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Loan(int loanId, int customerId, String customerName, double loanAmount, String status, Timestamp createdAt,
+	public Loan(int loanId, int customerId, double loanAmount, String status, Timestamp createdAt,
 			Timestamp updatedAt) {
 		super();
 		this.loanId = loanId;
 		this.customerId = customerId;
-		this.customerName = customerName;
 		this.loanAmount = loanAmount;
 		this.status = status;
 		this.createdAt = createdAt;
@@ -43,14 +41,6 @@ public class Loan {
 
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
-	}
-
-	public String getCustomerName() {
-		return customerName;
-	}
-
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
 	}
 
 	public double getLoanAmount() {

@@ -1,0 +1,88 @@
+CREATE TABLE Customers (
+    customerId INT PRIMARY KEY ,
+    firstName VARCHAR(50) NOT NULL,
+    lastName VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    dob DATE NOT NULL,
+    address VARCHAR(255),
+    contact VARCHAR(15),
+    aadhar VARCHAR(20),
+    pan VARCHAR(20),
+    accountNo VARCHAR(20) UNIQUE NOT NULL,
+    balance DOUBLE DEFAULT 0.0,
+    activeAccount BOOLEAN DEFAULT FALSE
+);
+
+drop table customers;
+
+INSERT INTO Customers (customerId, firstName, lastName, email, password, dob, address, contact, aadhar, pan, accountNo, balance, activeAccount) VALUES
+(10001, 'Rahul', 'Sharma', 'rahul.sharma@gmail.com', 'Rahul@123', DATE('1995-08-15'), 'Noida, India', '9876543210', '123456789012', 'ABCDE1234F', 'ACC1001', 69999.00, TRUE);
+
+INSERT INTO Customers (customerId, firstName, lastName, email, password, dob, address, contact, aadhar, pan, accountNo, balance, activeAccount) VALUES
+(10002, 'Sneha', 'Verma', 'sneha.v@gmail.com', 'Sneha@456', DATE('1992-11-22'), 'Mumbai, India', '9876500012', '987654321000', 'PQRSX6789G', 'ACC1002', 65001.50, TRUE);
+
+INSERT INTO Customers (customerId, firstName, lastName, email, password, dob, address, contact, aadhar, pan, accountNo, balance, activeAccount) VALUES
+(10004, 'Priya', 'Rao', 'priya.rao@yahoo.com', 'Priya@321', DATE('1990-01-12'), 'Hyderabad, India', '9988776655', '789456123789', 'XYZAQ9876L', 'ACC1004', 120000.00, TRUE);
+
+INSERT INTO Customers (customerId, firstName, lastName, email, password, dob, address, contact, aadhar, pan, accountNo, balance, activeAccount) VALUES
+(10005, 'Ravi', 'Mehta', 'ravi.mehta@gmail.com', 'Ravi$123', DATE('1985-03-08'), 'Ahmedabad, India', '9012345678', '321654987123', 'KLMNO4567J', 'ACC1005', 9500.25, FALSE);
+
+INSERT INTO Customers (customerId, firstName, lastName, email, password, dob, address, contact, aadhar, pan, accountNo, balance, activeAccount) VALUES
+(37616, 'Devansh', 'Jaiswal', 'devansh@gmail.com', 'devansh@123', DATE('2000-03-07'), 'Baliya UP India', '9988776655', '563063548971', 'ABCDE1238F', 'ACC7734', 3000.00, TRUE);
+
+INSERT INTO Customers (customerId, firstName, lastName, email, password, dob, address, contact, aadhar, pan, accountNo, balance, activeAccount) VALUES
+(43507, 'Yash', 'Gangwar', 'yash.gangwar@gmail.com', 'yash@123', DATE('2001-02-15'), 'Near Sector 62 Noida', '9638520147', '563063548960', 'ABCDE1236F', 'ACC8115', 4000.00, FALSE);
+
+INSERT INTO Customers (customerId, firstName, lastName, email, password, dob, address, contact, aadhar, pan, accountNo, balance, activeAccount) VALUES
+(90510, 'Amit', 'Gupta', 'amit123@gmail.com', 'Amit@123', DATE('2025-07-01'), 'Noida', '9638520147', '563063548957', 'ABCDE1235F', 'ACC9858', 3000.00, FALSE);
+
+CREATE TABLE Employees (
+    empId INT PRIMARY KEY ,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(100),
+    role VARCHAR(50),
+    address VARCHAR(200),
+    contact VARCHAR(15)
+);
+
+select * from customers;
+
+INSERT INTO Employees (empId, name, email, password, role, address, contact) VALUES
+(123456, 'Rahul Sharma', 'rahul.sharma@example.com', 'Emp@123', 'Employee', '123 Main Street, New Delhi', '9376543210'),
+(129579, 'Abhi', 'abhi123@gmail.com', 'Abhi@123', 'Employee', 'Noida Sec 130', '9623015478');
+
+
+CREATE TABLE Transactions (
+    transactionId INT PRIMARY KEY ,
+    senderAccountNo VARCHAR(20) NOT NULL,
+    receiverAccountNo VARCHAR(20) NOT NULL,
+    amount DOUBLE NOT NULL,
+    transactionTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_transaction_sender FOREIGN KEY (senderAccountNo)
+        REFERENCES Customers(accountNo),
+        
+    CONSTRAINT fk_transaction_receiver FOREIGN KEY (receiverAccountNo)
+        REFERENCES Customers(accountNo)
+);
+
+
+CREATE TABLE Loans (
+    loanId INT PRIMARY KEY ,
+    customerId INT NOT NULL,
+    loanAmount DOUBLE NOT NULL,
+    status VARCHAR(20) DEFAULT 'Pending',
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_loan_customer FOREIGN KEY (customerId)
+        REFERENCES Customers(customerId)
+);
+
+
+drop table loans;
+
+
+

@@ -1,142 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Add New Customer</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-    }
+	<meta charset="UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<title>Add New Customer</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background: #f4f4f4;
+			margin: 0;
+		}
 
-    .container {
-      max-width: 700px;
-      background: #fff;
-      padding: 30px;
-      margin: 40px auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+		.container {
+			max-width: 700px;
+			background: #fff;
+			padding: 30px;
+			margin: 40px auto;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 25px;
-    }
+		h1 {
+			text-align: center;
+			margin-bottom: 25px;
+		}
 
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
+		label {
+			display: block;
+			margin-bottom: 6px;
+			font-weight: bold;
+		}
 
-    input, textarea, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
+		input,
+		textarea,
+		select {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 15px;
+			border-radius: 4px;
+			border: 1px solid #ccc;
+		}
 
-    button {
-      width: 100%;
-      background-color: #007bff;
-      color: white;
-      padding: 12px;
-      border: none;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+		button {
+			width: 100%;
+			background-color: #007bff;
+			color: white;
+			padding: 12px;
+			border: none;
+			font-size: 16px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
 
-    button:hover {
-      background-color: #0056b3;
-    }
+		button:hover {
+			background-color: #0056b3;
+		}
 
-    .message {
-      text-align: center;
-      color: green;
-      margin-top: 10px;
-    }
-  </style>
+		.message {
+			text-align: center;
+			color: green;
+			margin-top: 10px;
+		}
+	</style>
 </head>
+
 <body>
 
-  <!-- Navbar -->
-  <div id="navbar"></div>
+	<!-- Navbar -->
+	<div id="navbar"></div>
 
-  <div class="container">
-    <h1>Add New Customer</h1>
+	<div class="container">
+		<h1>Add New Customer</h1>
 
-    <form action="/Bank_Management_System/addCustomer" method="post" onsubmit="return validateForm()">
-      <label for="firstName">First Name</label>
-      <input type="text" name="firstName" required>
+		<form action="/Bank_Management_System/addCustomer" method="post" onsubmit="return validateForm()">
+			<label for="firstName">First Name</label>
+			<input type="text" name="firstName" required>
 
-      <label for="lastName">Last Name</label>
-      <input type="text" name="lastName" required>
+			<label for="lastName">Last Name</label>
+			<input type="text" name="lastName" required>
 
-      <label for="email">Email</label>
-	  <input type="text" id="email" name="email" required />
-	  <span id="emailError" style="color: red;"></span>
+			<label for="email">Email</label>
+			<input type="text" id="email" name="email" required />
+			<span id="emailError" style="color: red;"></span>
 
-      <label for="password">Password</label>
-      <input type="password" name="password" placeholder="Choose complex password.." required>
+			<label for="password">Password</label>
+			<input type="password" name="password" placeholder="Choose complex password.." required>
 
-      <label for="dob">Date of Birth</label>
-      <input type="date" name="dob" required>
+			<label for="dob">Date of Birth</label>
+			<input type="date" name="dob" required>
 
-      <label for="contact">Contact Number</label>
-      <input type="tel" name="contact" pattern="[0-9]{10}" required>
+			<label for="contact">Contact Number</label>
+			<input type="tel" name="contact" pattern="[0-9]{10}" required>
 
-      <label for="address">Address</label>
-      <textarea name="address" rows="3" required></textarea>
+			<label for="address">Address</label>
+			<textarea name="address" rows="3" required></textarea>
 
-      <label for="aadhar">Aadhar Number</label>
-      <input type="text" name="aadhar" maxlength="12" required>
+			<label for="aadhar">Aadhar Number</label>
+			<input type="text" name="aadhar" maxlength="12" required>
 
-      <label for="pan">PAN Number</label>
-      <input type="text" name="pan" maxlength="10" required>
+			<label for="pan">PAN Number</label>
+			<input type="text" name="pan" maxlength="10" required>
 
-      <label for="accountNo">Account Number</label>
-      <input type="text" name="accountNo" placeholder="Account number will be generate automatically" disabled>
+			<label for="accountNo">Account Number</label>
+			<input type="text" name="accountNo" placeholder="Account number will be generate automatically" disabled>
 
-      <label for="balance">Opening Balance (₹)</label>
-      <input type="number" name="balance" min="0" step="0.01" required>
+			<label for="balance">Opening Balance (₹)</label>
+			<input type="number" name="balance" min="0" step="0.01" required>
 
-      <button type="submit">Add Customer</button>
-    </form>
-  </div>
+			<button type="submit">Add Customer</button>
+		</form>
+	</div>
 
-  <!-- Footer -->
-  <div id="footer"></div>
+	<!-- Footer -->
+	<div id="footer"></div>
 
-  <script>
-    fetch("enavbar.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("navbar").innerHTML = data);
+	<script>
+		fetch("enavbar.html")
+			.then(res => res.text())
+			.then(data => document.getElementById("navbar").innerHTML = data);
 
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
-    
-    function isValidEmail(email) {
-    	  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.(com|in|org|net|gov|edu|co\.in|info)$/i;
-    	  return regex.test(email);
-    	}
-    
-    function validateForm() {
-        const emailInput = document.getElementById("email").value.trim();
-        const errorSpan = document.getElementById("emailError");
+		fetch("footer.html")
+			.then(res => res.text())
+			.then(data => document.getElementById("footer").innerHTML = data);
 
-        if (!isValidEmail(emailInput)) {
-          errorSpan.textContent = "❌ Please enter a valid email like abc@example.com";
-          return false;
-        }
+		function isValidEmail(email) {
+			const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.(com|in|org|net|gov|edu|co\.in|info)$/i;
+			return regex.test(email);
+		}
 
-        errorSpan.textContent = "";
-        return true;
-      }
-  </script>
+		function validateForm() {
+			const emailInput = document.getElementById("email").value.trim();
+			const errorSpan = document.getElementById("emailError");
+
+			if (!isValidEmail(emailInput)) {
+				errorSpan.textContent = "❌ Please enter a valid email like abc@example.com";
+				return false;
+			}
+
+			errorSpan.textContent = "";
+			return true;
+		}
+	</script>
 
 </body>
+
 </html>

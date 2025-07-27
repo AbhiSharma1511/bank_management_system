@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ page import="com.entity.Customer"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +90,7 @@ align-items: center;
 	    }
 		%>
 
-	<div id="navbar"></div>
+	<%@ include file="navbar.html" %>
 	<div class="container">
 
 		<div 
@@ -146,18 +145,14 @@ align-items: center;
 				<div class="card quick-link-card">
 					<h2>🛠</h2>
 					<p>
-						<a href="support_request.html">Support Request</a>
+						<a href="/Bank_Management_System/customer_loan">Manage Loan</a>
 					</p>
 				</div>
 			</div>
 		</div>
 
 	</div>
-		<div id="footer"></div>
+	<%@ include file="footer.html" %>
 
-<script>
-  fetch("navbar.html").then(res => res.text()).then(data => document.getElementById("navbar").innerHTML = data);
-  fetch("footer.html").then(res => res.text()).then(data => document.getElementById("footer").innerHTML = data);
-</script>
 </body>
 </html>

@@ -4,6 +4,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Employee Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
@@ -92,8 +95,16 @@
       margin-top: 40px;
     }
   </style>
+  <script>
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+      location.reload(); // Recheck session and reload page
+    }
+  });
+</script>
 </head>
 <body>
+<%@ include file="employee_auth.jsp" %>
 <% Employee emp = (Employee) session.getAttribute("employee"); %>
   <!-- Navbar -->
   <div id="navbar"></div>
@@ -110,7 +121,7 @@
     <div class="card">
       <h1>Customer Management</h1>
       <p>View and update customer details.</p>
-      <a href="/Bank_Management_System/manageCustomers">Go</a>
+      <a href="/Bank_Management_System/manage_customers">Go</a>
     </div>
     <div class="card">
       <h1>Loan Handling</h1>

@@ -1,7 +1,7 @@
 package com.controllers.Customers;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.Random;
 
 import com.dao.CustomerDAO;
@@ -68,7 +68,7 @@ public class TransferMoneyServlet extends HttpServlet {
         		request.getRequestDispatcher("customer/transfer_money.jsp").forward(request, response);
         		return;
         	}
-        	
+
         	if (sender.getAccountNo().equals(receiver.getAccountNo())) {
         		request.setAttribute("message", "You cannot transfer money to your own account.");
         		request.getRequestDispatcher("customer/transfer_money.jsp").forward(request, response);
@@ -86,14 +86,14 @@ public class TransferMoneyServlet extends HttpServlet {
         	if (senderUpdated && receiverUpdated) {
         		// Save transaction
         		int transactionId = generateUniqueTransactionId();
-
+        		Timestamp time = new Timestamp(System.currentTimeMillis());
         		Transaction transaction = new Transaction();
 
         		transaction.setTransactionId(transactionId);
         		transaction.setSenderAccountNo(sender.getAccountNo());
         		transaction.setReceiverAccountNo(receiverAccount);
         		transaction.setAmount(amount);
-        		transaction.setTransactionDate(LocalDate.now());
+        		transaction.setTransactionTime(time);
 
         		transactionDAO.addTransaction(transaction);
 

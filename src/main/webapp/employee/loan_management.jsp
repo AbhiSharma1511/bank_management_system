@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+
 <title>Loan Management</title>
 <style>
 body {
@@ -79,6 +79,7 @@ th {
 </style>
 </head>
 <body>
+<%@ include file="employee_auth.jsp" %>
 	<%
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	%>
@@ -127,7 +128,7 @@ th {
 				%>
 				<tr>
 					<td><%=loan.getLoanId()%></td>
-					<td><%=loan.getCustomerName()%> (ID: <%=loan.getCustomerId()%>)</td>
+					<td><%=loan.getCustomerId()%></td>
 					<td>₹<%=String.format("%,.2f", loan.getLoanAmount())%></td>
 					<td><span class="status <%=statusClass%>"><%=loan.getStatus()%></span></td>
 					<td><%= dateFormat.format(loan.getCreatedAt()) %></td>
@@ -149,8 +150,6 @@ th {
 				%>
 			</tbody>
 		</table>
-
-		<a class="add-button" href="new_loan.jsp">➕ Add New Loan</a>
 	</div>
 
 	<div id="footer"></div>
@@ -163,6 +162,12 @@ th {
   fetch("footer.html")
     .then(res => res.text())
     .then(data => document.getElementById("footer").innerHTML = data);
+  
+  window.addEventListener("pageshow", function (event) {
+	  if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+	    window.location.reload(); // Force session re-check
+	  }
+	});
 </script>
 
 </body>

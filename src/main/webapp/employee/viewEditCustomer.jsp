@@ -8,6 +8,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Edit Customer</title>
   <style>
     body {
@@ -107,6 +110,7 @@
   </style>
 </head>
 <body>
+<%@ include file="employee_auth.jsp" %>
 <div><%@ include file="enavbar.html"  %></div>
 <div class="container">
   <h2 style="">🔍 Customer Profile</h2>

@@ -2,6 +2,23 @@ package com.entity;
 
 import java.time.LocalDate;
 
+
+//CREATE TABLE Customers (
+//	    customerId INT PRIMARY KEY ,
+//	    firstName VARCHAR(50) NOT NULL,
+//	    lastName VARCHAR(50) NOT NULL,
+//	    email VARCHAR(100) NOT NULL UNIQUE,
+//	    password VARCHAR(100) NOT NULL,
+//	    dob DATE NOT NULL,
+//	    address VARCHAR(255),
+//	    contact VARCHAR(15),
+//	    aadhar VARCHAR(20),
+//	    pan VARCHAR(20),
+//	    accountNo VARCHAR(20) UNIQUE NOT NULL,
+//	    balance DOUBLE DEFAULT 0.0,
+//	    activeAccount BOOLEAN DEFAULT FALSE
+//	);
+
 public class Customer {
 
     private int customerId;

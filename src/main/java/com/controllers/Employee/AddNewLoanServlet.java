@@ -42,7 +42,6 @@ public class AddNewLoanServlet extends HttpServlet {
             // 2. Create Loan object
             Loan loan = new Loan();
             loan.setCustomerId(customerId);
-            loan.setCustomerName(customerName);
             loan.setLoanAmount(loanAmount);
             loan.setStatus("Pending");
 

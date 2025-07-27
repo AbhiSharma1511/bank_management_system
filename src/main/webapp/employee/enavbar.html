@@ -1,59 +1,65 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 
-<style>
-.navbar {
-      background-color: rgb(0, 64, 128);
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-    }
+	<style>
+		.navbar {
+			background-color: rgb(0, 64, 128);
+			padding: 15px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			color: white;
+		}
 
-    .navbar .logo {
-      font-size: 20px;
-      font-weight: bold;
-    }
+		.navbar .logo {
+			font-size: 20px;
+			font-weight: bold;
+		}
 
-    .navbar ul {
-      list-style: none;
-      display: flex;
-      gap: 15px;
-    }
+		.navbar ul {
+			list-style: none;
+			display: flex;
+			gap: 15px;
+		}
 
-    .navbar ul li {
-      display: inline;
-      margin-left: 20px;
-      
-    }
+		.navbar ul li {
+			display: inline;
+			margin-left: 20px;
 
-    .navbar ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-      font-size: 18px;
-    }
+		}
 
-    .navbar ul li a:hover {
-      color: #dcdcdc;
-    }
-</style> 
+		.navbar ul li a {
+			color: white;
+			text-decoration: none;
+			font-weight: 500;
+			transition: color 0.3s;
+			font-size: 18px;
+		}
+
+		.navbar ul li a:hover {
+			color: #dcdcdc;
+		}
+	</style>
 </head>
+
 <body>
-<nav class="navbar">
-  <div class="logo">Bank Employee Portal</div>
-  <ul>
-    <li><a href="/Bank_Management_System/employee_home">Dashboard</a></li>
-    <li><a href="/Bank_Management_System/manageCustomers">Manage Customer</a></li>
-    <li><a href="/Bank_Management_System/viewTransactions">Transaction Management</a></li>
-    <li><a href="/Bank_Management_System/loan_management">Loan Management</a></li>
-    <li style="margin-left: 50px;"><a href="e_logout.html" >Logout</a></li>
-  </ul>
-</nav>
+	<nav class="navbar">
+		<div style="display: flex; gap:5px; align-items: center;">
+			<img src="..\images\BharatBank_logo.svg" style="width:50px; height: 50px;" />
+			<h1>भारतBank</h1>
+		</div>
+		<ul>
+			<li><a href="/Bank_Management_System/employee_home">Dashboard</a></li>
+			<li><a href="/Bank_Management_System/manage_customers">Manage Customer</a></li>
+			<li><a href="/Bank_Management_System/viewTransactions">Transaction Management</a></li>
+			<li><a href="/Bank_Management_System/loan_management">Loan Management</a></li>
+			<li style="margin-left: 50px;"><a href="e_logout.jsp">Logout</a></li>
+		</ul>
+	</nav>
 </body>
+
 </html>

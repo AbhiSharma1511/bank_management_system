@@ -6,7 +6,6 @@ import com.dao.CustomerDAO;
 import com.dao.CustomerDAOImpl;
 import com.entity.Customer;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -26,7 +25,7 @@ public class CustomerProfileServlet extends HttpServlet {
 			 HttpSession session = request.getSession(false); // don’t create session
 			 System.out.println("Customer profile servlet is called");
 		    if (session == null || session.getAttribute("customer") == null) {
-		        response.sendRedirect("customer/clogin.html"); // redirect to login if no session
+		        response.sendRedirect("customer/clogin.jsp"); // redirect to login if no session
 		        return;
 		    }
 		    else if (session != null && session.getAttribute("customer") != null) {
@@ -38,17 +37,15 @@ public class CustomerProfileServlet extends HttpServlet {
 				if (fullCustomer != null) {
 					System.out.println("Name: "+fullCustomer.getFirstName());
 					System.out.println("Account No: "+fullCustomer.getAccountNo());
-					request.setAttribute("customer", fullCustomer);
-					RequestDispatcher dispatcher = request.getRequestDispatcher("customer/customer_profile.jsp");
-					dispatcher.forward(request, response);
+					request.getSession().setAttribute("customer", fullCustomer);
+					response.sendRedirect("customer/customer_profile.jsp");
+
 				} else {
-					request.setAttribute("errorMessage", "Unable to fetch customer profile.");
-					request.getRequestDispatcher("customer/dashboard.jsp").forward(request, response);
+					request.getSession().setAttribute("errorMessage", "Unable to fetch customer profile.");
+					response.sendRedirect("customer/dashboard.jsp");
 				}
 			}
-		    else {
-				response.sendRedirect("customer/clogin.html");
-			}
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -64,6 +61,8 @@ public class CustomerProfileServlet extends HttpServlet {
 	        String contact = req.getParameter("contact");
 	        String address = req.getParameter("address");
 
+	        System.out.println("Customer details post method called.");
+
 	        Customer updatedCustomer = new Customer();
 	        updatedCustomer.setCustomerId(customerId);
 	        updatedCustomer.setEmail(email);     // optional if not editable
@@ -74,18 +73,19 @@ public class CustomerProfileServlet extends HttpServlet {
 	        boolean result = dao.updateCustomerDataByCustomer(updatedCustomer);
 
 	        if (result) {
-	            HttpSession session = req.getSession();
-	            session.setAttribute("message", "Customer details updated successfully.");
+	        	System.out.println("Customer data updated successfully.");
+	            req.getSession().setAttribute("data_update_message", "Customer details updated successfully.");
 	        } else {
-	            req.setAttribute("error", "Failed to update customer details.");
+	            req.getSession().setAttribute("data_update_message", "Failed to update customer details.");
 	        }
 
 	        resp.sendRedirect("customerProfile");
 
 	    } catch (Exception e) {
+	    	System.out.println("Customer data not updated successfully.");
 	        e.printStackTrace();
-	        req.setAttribute("error", "Something went wrong. " + e.getMessage());
-	        req.getRequestDispatcher("customerProfile").forward(req, resp);
+	        req.getSession().setAttribute("data_update_message", "Something went wrong.");
+	        resp.sendRedirect("customerProfile");
 	    }
 	}
 

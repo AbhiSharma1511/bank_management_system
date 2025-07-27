@@ -15,10 +15,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 
-@WebServlet("/manageCustomers")
+@WebServlet("/manage_customers")
 public class CustomerManageServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public void init() throws ServletException {
+	    System.out.println("CustomerManageServlet initialized...");
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

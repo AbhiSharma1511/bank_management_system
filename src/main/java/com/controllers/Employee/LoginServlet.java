@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/LoginServlet")
+@WebServlet("/elogin_servlet")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -33,6 +33,8 @@ public class LoginServlet extends HttpServlet {
         boolean isEmployeeExist = dao.login(id, password);
         HttpSession session = request.getSession();
         System.out.println("Session ID: " + session.getId());
+
+        System.out.println("Employee Exist: "+isEmployeeExist);
 
         if (isEmployeeExist) {
             session.setAttribute("employeeId", id);

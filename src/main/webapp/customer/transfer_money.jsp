@@ -84,7 +84,7 @@ button:hover {
 	<div class="container">
 		<h1>Transfer Money</h1>
 		<form id="transferForm" action="/Bank_Management_System/transferMoney"
-			method="post">
+			method="post" onSubmit="return validateForm();">
 
 			<label for="fromAccount">Sender Account Number</label> <input
 				type="text" id="fromAccount" value="<%=customer.getAccountNo()%>"
@@ -104,6 +104,18 @@ button:hover {
 
 	<div id="footer"><%@ include file="footer.html"%></div>
 
+<script>
+
+function validateForm(){
+	const amount = document.getElementById("amount").value;
+	const senderAccount = document.getElementById("toAccount").value;
+	if(confirm("Your want to send amount: "+ amount +"\n To account: "+ senderAccount+"?")){
+		return true;
+	}
+	return false;
+}
+
+</script>
 
 </body>
 </html>

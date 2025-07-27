@@ -12,7 +12,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public boolean login(String id, String password) {
-	    String sql = "SELECT * FROM employees WHERE id = ? AND password = ?";
+	    String sql = "SELECT * FROM employees WHERE empId = ? AND password = ?";
 	    try (Connection conn = DBUtil.getConnection();
 	         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -22,6 +22,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	        ResultSet rs = stmt.executeQuery();
 	        if (rs.next()) {
 	            System.out.println("Employee exists: true");
+	            stmt.close();
+	            conn.close();
 	            return true;
 	        } else {
 	            System.out.println("Employee exists: false");
@@ -39,7 +41,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	private Employee extractEmployeeFromResultSet(ResultSet rs) throws SQLException {
 	    Employee emp = new Employee();
 
-	    emp.setEmpId(rs.getInt("id"));
+	    emp.setEmpId(rs.getInt("empId"));
 	    emp.setName(rs.getString("name"));
 	    emp.setEmail(rs.getString("email"));
 	    emp.setPassword(rs.getString("password"));
@@ -80,7 +82,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public Employee getEmployeeData(int empId) {
 		try {
 			Employee employee = null;
-	        String sql = "select * from employees WHERE id=?";
+	        String sql = "select * from employees WHERE empId=?";
 	        Connection conn = DBUtil.getConnection();
 	        PreparedStatement ps = conn.prepareStatement(sql);
 	        ps.setInt(1, empId);
@@ -111,7 +113,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public boolean updateEmployeeData(int id, String contact, String address) {
 
 	    try {
-	        String sql = "UPDATE employees SET contact=?, address=? WHERE id=?";
+	        String sql = "UPDATE employees SET contact=?, address=? WHERE empId=?";
 	        Connection conn = DBUtil.getConnection();
 	        PreparedStatement ps = conn.prepareStatement(sql);
 	        ps.setString(1, contact);
@@ -141,7 +143,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	    try {
 	    	Connection conn = DBUtil.getConnection();
-	        String sql = "UPDATE employees SET password = ? WHERE id = ?";
+	        String sql = "UPDATE employees SET password = ? WHERE empId = ?";
 	        PreparedStatement ps = conn.prepareStatement(sql);
 	        ps.setString(1, newPassword);
 	        ps.setInt(2, empId);
@@ -168,7 +170,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public boolean registerEmployee(Employee employee) {
-	    String sql = "INSERT INTO employees (id, name, email, password, role, address, contact) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    String sql = "INSERT INTO employees (empId, name, email, password, role, address, contact) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 	    try (Connection conn = DBUtil.getConnection();
 	         PreparedStatement ps = conn.prepareStatement(sql)) {

@@ -34,11 +34,11 @@ public class ViewEditCustomerServlet extends HttpServlet {
                 request.getRequestDispatcher("/employee/viewEditCustomer.jsp").forward(request, response);
             } else {
                 request.getSession().setAttribute("error", "Customer not found.");
-                response.sendRedirect(request.getContextPath() + "/manageCustomers");
+                response.sendRedirect(request.getContextPath() + "/manage_customers");
             }
 
         } catch (NumberFormatException e) {
-            response.sendRedirect("manageCustomers");
+            response.sendRedirect("manage_customers");
         }
     }
 
@@ -76,7 +76,7 @@ public class ViewEditCustomerServlet extends HttpServlet {
             request.getSession().setAttribute("error", "❌ Invalid input data.");
         }
 
-        response.sendRedirect(request.getContextPath() + "/manageCustomers");
+        response.sendRedirect(request.getContextPath() + "/manage_customers");
     }
 
 }

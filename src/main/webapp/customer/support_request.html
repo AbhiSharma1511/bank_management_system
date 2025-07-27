@@ -1,116 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Raise Support Request</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
+	<meta charset="UTF-8">
+	<title>Raise Support Request</title>
+	<style>
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+		}
 
-    .container {
-      max-width: 600px;
-      margin: 60px auto;
-      padding: 30px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    }
+		.container {
+			max-width: 600px;
+			margin: 60px auto;
+			padding: 30px;
+			background-color: white;
+			border-radius: 10px;
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+		}
 
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #333;
-    }
+		h2 {
+			text-align: center;
+			margin-bottom: 25px;
+			color: #333;
+		}
 
-    label {
-      font-weight: bold;
-      margin-bottom: 10px;
-      display: block;
-      color: #555;
-    }
+		label {
+			font-weight: bold;
+			margin-bottom: 10px;
+			display: block;
+			color: #555;
+		}
 
-    textarea {
-      width: 100%;
-      height: 150px;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      resize: vertical;
-      font-size: 16px;
-    }
+		textarea {
+			width: 100%;
+			height: 150px;
+			padding: 12px;
+			border: 1px solid #ccc;
+			border-radius: 6px;
+			resize: vertical;
+			font-size: 16px;
+		}
 
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
+		.btn {
+			display: block;
+			width: 100%;
+			padding: 12px;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 6px;
+			font-size: 16px;
+			cursor: pointer;
+			margin-top: 20px;
+		}
 
-    .btn:hover {
-      background-color: #0056b3;
-    }
+		.btn:hover {
+			background-color: #0056b3;
+		}
 
-    .success-message {
-      margin-top: 15px;
-      color: green;
-      font-weight: bold;
-      text-align: center;
-      display: none;
-    }
-  </style>
+		.success-message {
+			margin-top: 15px;
+			color: green;
+			font-weight: bold;
+			text-align: center;
+			display: none;
+		}
+	</style>
 </head>
+
 <body>
-<div id="navbar"> </div>
-<div class="container">
-  <h2>🛠 Raise Support Request</h2>
-  <form onsubmit="return submitRequest()">
-    <label for="message">Describe your issue:</label>
-    <textarea id="message" placeholder="Write your problem here..."></textarea>
-    <button type="submit" class="btn">Submit Request</button>
-    <div class="success-message" id="successMessage">✅ Support request submitted successfully!</div>
-  </form>
-</div>
+	<div id="navbar"> </div>
+	<div class="container">
+		<h2>🛠 Raise Support Request</h2>
+		<form onsubmit="return submitRequest()">
+			<label for="message">Describe your issue:</label>
+			<textarea id="message" placeholder="Write your problem here..."></textarea>
+			<button type="submit" class="btn">Submit Request</button>
+			<div class="success-message" id="successMessage">✅ Support request submitted successfully!</div>
+		</form>
+	</div>
 
-<div id="footer"></div>
-<script>
+	<div id="footer"></div>
+	<script>
 
-fetch("navbar.html")
-.then(res => res.text())
-.then(data => document.getElementById("navbar").innerHTML = data);
+		fetch("navbar.html")
+			.then(res => res.text())
+			.then(data => document.getElementById("navbar").innerHTML = data);
 
-fetch("footer.html")
-.then(res => res.text())
-.then(data => document.getElementById("footer").innerHTML = data);
+		fetch("footer.html")
+			.then(res => res.text())
+			.then(data => document.getElementById("footer").innerHTML = data);
 
-  function submitRequest() {
-    const msg = document.getElementById("message").value.trim();
-    const successDiv = document.getElementById("successMessage");
+		function submitRequest() {
+			const msg = document.getElementById("message").value.trim();
+			const successDiv = document.getElementById("successMessage");
 
-    if (msg === "") {
-      alert("❌ Please describe your issue before submitting.");
-      return false;
-    }
+			if (msg === "") {
+				alert("❌ Please describe your issue before submitting.");
+				return false;
+			}
 
-    // Show success message
-    successDiv.style.display = "block";
+			// Show success message
+			successDiv.style.display = "block";
 
-    // Clear the form
-    document.getElementById("message").value = "";
+			// Clear the form
+			document.getElementById("message").value = "";
 
-    // Prevent real form submission
-    return false;
-  }
-</script>
+			// Prevent real form submission
+			return false;
+		}
+	</script>
 
 </body>
+
 </html>

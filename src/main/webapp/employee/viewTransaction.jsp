@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*, com.entity.Transaction"%>
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
 <title>Manage Transactions</title>
 <style>
 body {
@@ -22,10 +26,12 @@ th, td {
 	border: 1px solid #ddd;
 	padding: 8px;
 	text-align: center;
+	
 }
 
 th {
-	background-color: #f2f2f2;
+	background: green;
+	color:white;
 }
 
 form {
@@ -44,6 +50,10 @@ label, input, select {
 </style>
 </head>
 <body>
+<%@ include file="employee_auth.jsp" %>
+<%
+SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm a");
+%>
 	<div><%@ include file="enavbar.html"%></div>
 	
 	<div style="padding: 20px">
@@ -75,7 +85,8 @@ label, input, select {
 		</thead>
 		<tbody>
 			<%
-			List<Transaction> transactions = (List<Transaction>) request.getAttribute("transactions");
+			List<Transaction> transactions = (List<Transaction>) session.getAttribute("transactions");
+			session.removeAttribute("transactions");
 			if (transactions != null && !transactions.isEmpty()) {
 				for (Transaction txn : transactions) {
 			%>
@@ -84,7 +95,7 @@ label, input, select {
 				<td><%=txn.getSenderAccountNo()%></td>
 				<td><%=txn.getReceiverAccountNo()%></td>
 				<td><%=txn.getAmount()%></td>
-				<td><%=txn.getTransactionDate()%></td>
+				<td><%=dateFormat.format(txn.getTransactionTime())%></td>
 			</tr>
 			<%
 			}

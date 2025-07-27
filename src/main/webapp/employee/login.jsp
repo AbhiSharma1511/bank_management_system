@@ -7,10 +7,9 @@
   <title>Employee Login</title>
   <style>
     body {
-      background: #3c46a6;
-background: radial-gradient(circle,rgba(60, 70, 166, 1) 0%, rgba(124, 136, 204, 1) 50%, rgba(83, 121, 237, 1) 100%);
-    }
-
+      background: #5379ED;
+		background: radial-gradient(circle, rgba(83, 121, 237, 1) 0%, rgba(0, 80, 150, 1) 100%);
+	}
     .container {
       width: 350px;
       margin: 30px auto;
@@ -105,7 +104,7 @@ background: radial-gradient(circle,rgba(60, 70, 166, 1) 0%, rgba(124, 136, 204, 
     <h2>Employee Login</h2>
     
     <!-- Login Form Starts -->
-    <form action="/Bank_Management_System/LoginServlet" id="loginForm" method="Post">
+    <form action="/Bank_Management_System/elogin_servlet" id="loginForm" method="Post">
       <label for="id">Employee ID</label>
       <input type="text" id="id" name="id" required placeholder="12345">
 

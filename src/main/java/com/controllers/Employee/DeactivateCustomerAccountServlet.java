@@ -27,9 +27,9 @@ public class DeactivateCustomerAccountServlet extends HttpServlet {
             int customerId = Integer.parseInt(idParam);
 
             CustomerDAO dao = new CustomerDAOImpl();
-            
-            
-            
+
+
+
             boolean success = dao.setDeactiveAccount(customerId);
             System.out.println("Customer deactive: "+success);
             HttpSession session = request.getSession();
@@ -44,6 +44,6 @@ public class DeactivateCustomerAccountServlet extends HttpServlet {
         }
 
         // Redirect back to manage customers page
-        response.sendRedirect(request.getContextPath() + "/manageCustomers");
+        response.sendRedirect(request.getContextPath() + "/manage_customers");
     }
 }

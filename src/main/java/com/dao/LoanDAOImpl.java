@@ -13,56 +13,61 @@ import com.utils.DBUtil;
 
 public class LoanDAOImpl implements LoanDAO {
 
+	@Override
+	public List<Loan> getAllLoans() {
+	    List<Loan> list = new ArrayList<>();
+	    String sql = "SELECT * FROM Loans";
+	    try (Connection con = DBUtil.getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
 
-    @Override
-    public List<Loan> getAllLoans() {
-        List<Loan> list = new ArrayList<>();
-        String sql = "SELECT * FROM loans";
-        try (Connection con = DBUtil.getConnection();PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                Loan loan = new Loan();
-                loan.setLoanId(rs.getInt("loanId"));
-                loan.setCustomerId(rs.getInt("customerId"));
-                loan.setCustomerName(rs.getString("customerName"));
-                loan.setLoanAmount(rs.getDouble("loanAmount"));
-                loan.setStatus(rs.getString("status"));
-                loan.setCreatedAt(rs.getTimestamp("createdAt"));
-                loan.setUpdatedAt(rs.getTimestamp("updatedAt"));
-                list.add(loan);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+	        System.out.println("getAllLoans() called...");
+
+	        while (rs.next()) {
+	            Loan loan = new Loan();
+	            loan.setLoanId(rs.getInt("loanId"));
+	            loan.setCustomerId(rs.getInt("customerId"));
+	            loan.setLoanAmount(rs.getDouble("loanAmount"));
+	            loan.setStatus(rs.getString("status"));
+
+	            Timestamp created = rs.getTimestamp("createdAt");
+	            Timestamp updated = rs.getTimestamp("updatedAt");
+
+	            loan.setCreatedAt(created);
+	            loan.setUpdatedAt(updated);
+
+	            System.out.println("Loan ID: " + loan.getLoanId() + " Created At: " + created);
+
+	            list.add(loan);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+
 
     @Override
     public boolean applyLoan(Loan loan) {
-        String sql = "INSERT INTO loans (loanId, customerId, customerName, loanAmount, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO loans (loanId, customerId, loanAmount, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = DBUtil.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            Timestamp now = new Timestamp(System.currentTimeMillis());
-            ps.setInt(1, generateLoanId());
-            ps.setInt(2, loan.getCustomerId());
-            ps.setString(3, loan.getCustomerName());
-            ps.setDouble(4, loan.getLoanAmount());
-            ps.setString(5, "Pending");
-            ps.setTimestamp(6, now); // created_at
-            ps.setTimestamp(7, now); // updated_at
-            if(ps.executeUpdate()>0) {
-            	ps.close();
-            	con.close();
-            	return true;
-            } else {
-				throw new Exception();
-			}
+
+            ps.setInt(1, generateLoanId());             // loanId
+            ps.setInt(2, loan.getCustomerId());         // customerId
+            ps.setDouble(3, loan.getLoanAmount());      // loanAmount
+            ps.setString(4, "Pending");                 // status
+            ps.setTimestamp(5, loan.getCreatedAt());    // createdAt
+            ps.setTimestamp(6, loan.getUpdatedAt());
+            System.out.println("Loan created Time in dao: "+loan.getCreatedAt());// updatedAt
+
+            return ps.executeUpdate() > 0;
 
         } catch (Exception e) {
-        	System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return false;
     }
+
 
     @Override
     public boolean updateLoanStatus(int loanId, String status) {
@@ -95,8 +100,7 @@ public class LoanDAOImpl implements LoanDAO {
                     Loan loan = new Loan();
                     loan.setLoanId(rs.getInt("loanId"));
                     loan.setCustomerId(rs.getInt("customerId"));
-                    loan.setCustomerName(rs.getString("customerIame"));
-                    loan.setLoanAmount(rs.getDouble("amount"));
+                    loan.setLoanAmount(rs.getDouble("loanAmount"));
                     loan.setStatus(rs.getString("status"));
                     loan.setCreatedAt(rs.getTimestamp("createdAt"));
                     loan.setUpdatedAt(rs.getTimestamp("updatedAt"));
@@ -131,7 +135,6 @@ public class LoanDAOImpl implements LoanDAO {
                 loan = new Loan();
                 loan.setLoanId(rs.getInt("loanId"));
                 loan.setCustomerId(rs.getInt("customerId"));
-                loan.setCustomerName(rs.getString("customerName"));
                 loan.setLoanAmount(rs.getDouble("loanAmount"));
                 loan.setStatus(rs.getString("status"));
                 loan.setCreatedAt(rs.getTimestamp("createdAt")); // Or rs.getDate(), based on your column type
@@ -144,5 +147,19 @@ public class LoanDAOImpl implements LoanDAO {
         }
         return loan;
     }
+
+    @Override
+    public boolean deleteLoan(int loanId) {
+        String sql = "DELETE FROM loans WHERE loanId = ?";
+        try (Connection con = DBUtil.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, loanId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0; // returns true if a row was deleted
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 }

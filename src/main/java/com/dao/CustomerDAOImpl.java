@@ -16,7 +16,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean login(int customerId, String password) {
-        String sql = "SELECT * FROM customer WHERE customer_id = ? AND password = ?";
+        String sql = "SELECT * FROM customers WHERE customerId = ? AND password = ?";
 
         try (Connection conn = DBUtil.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, customerId);
@@ -43,7 +43,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean addNewCustomer(Customer customer) {
-        String sql = "INSERT INTO customer (customer_id, first_name, last_name, email, password, dob, address, contact, aadhar, pan, account_no, balance, active_account) "
+        String sql = "INSERT INTO customers (customerId, firstName, lastName, email, password, dob, address, contact, aadhar, pan, accountNo, balance, activeAccount) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int customerId = generateUniqueCustomerId();
         int accountNo = generateCustomerAccountNo();
@@ -71,7 +71,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean updateCustomerData(Customer customer) {
-        String sql = "UPDATE customer SET email=?, contact=?, address=?, active_account=? WHERE customer_id=?";
+        String sql = "UPDATE customers SET email=?, contact=?, address=?, activeAccount=? WHERE customerId=?";
         try (Connection conn = DBUtil.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, customer.getEmail());
             stmt.setString(2, customer.getContact());
@@ -79,7 +79,13 @@ public class CustomerDAOImpl implements CustomerDAO {
             stmt.setBoolean(4, customer.isActiveAccount());
             stmt.setInt(5, customer.getCustomerId());
 
-            return stmt.executeUpdate() > 0;
+            if (stmt.executeUpdate() > 0) {
+				stmt.close();
+				conn.commit();
+				conn.close();
+				return true;
+
+			}
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,7 +96,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean deleteCustomer(int customerId) {
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("DELETE FROM customer WHERE customer_id = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM customers WHERE customerId = ?")) {
 
             stmt.setInt(1, customerId);
             int rows = stmt.executeUpdate();
@@ -105,7 +111,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean setDeactiveAccount(int customerId) {
     	try (Connection conn = DBUtil.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("update customer set active_account=? WHERE customer_id = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("update customers set activeAccount=? WHERE customerId = ?")) {
 
                stmt.setBoolean(1, false);
                stmt.setInt(2, customerId);
@@ -119,25 +125,25 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public List<Customer> getAllCustomers() {
-        String sql = "SELECT * FROM customer";
+        String sql = "SELECT * FROM customers";
         return getCustomerListByQuery(sql);
     }
 
     @Override
     public List<Customer> getAllActiveCustomers() {
-        String sql = "SELECT * FROM customer WHERE active_account = true";
+        String sql = "SELECT * FROM customers WHERE activeAccount = true";
         return getCustomerListByQuery(sql);
     }
 
     @Override
     public List<Customer> getAllInactiveCustomers() {
-        String sql = "SELECT * FROM customer WHERE active_account = false";
+        String sql = "SELECT * FROM customers WHERE activeAccount = false";
         return getCustomerListByQuery(sql);
     }
 
     @Override
     public Customer getCustomerById(int customerId) {
-        String sql = "SELECT * FROM customer WHERE customer_id = ?";
+        String sql = "SELECT * FROM customers WHERE customerId = ?";
         try (Connection conn = DBUtil.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, customerId);
             ResultSet rs = stmt.executeQuery();
@@ -166,9 +172,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     private Customer extractCustomerFromResultSet(ResultSet rs) throws SQLException {
         Customer customer = new Customer();
-        customer.setCustomerId(rs.getInt("customer_id"));
-        customer.setFirstName(rs.getString("first_name"));
-        customer.setLastName(rs.getString("last_name"));
+        customer.setCustomerId(rs.getInt("customerId"));
+        customer.setFirstName(rs.getString("firstName"));
+        customer.setLastName(rs.getString("lastName"));
         customer.setEmail(rs.getString("email"));
         customer.setPassword(rs.getString("password"));
         customer.setDob(rs.getDate("dob").toLocalDate());
@@ -176,9 +182,9 @@ public class CustomerDAOImpl implements CustomerDAO {
         customer.setContact(rs.getString("contact"));
         customer.setAadhar(rs.getString("aadhar"));
         customer.setPan(rs.getString("pan"));
-        customer.setAccountNo(rs.getString("account_no"));
+        customer.setAccountNo(rs.getString("accountNo"));
         customer.setBalance(rs.getDouble("balance"));
-        customer.setActiveAccount(rs.getBoolean("active_account"));
+        customer.setActiveAccount(rs.getBoolean("activeAccount"));
         return customer;
     }
 
@@ -202,7 +208,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	private boolean isCustomerExists(int id) {
-	    String sql = "SELECT customer_id FROM customer WHERE customer_id = ?";
+	    String sql = "SELECT customerId FROM customers WHERE customerid = ?";
 	    try (Connection conn = DBUtil.getConnection();
 	         PreparedStatement stmt = conn.prepareStatement(sql)) {
 	        stmt.setInt(1, id);
@@ -216,7 +222,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
     public boolean updateCustomerDataByCustomer(Customer customer) {
-        String sql = "UPDATE customer SET email=?, contact=?, address=? WHERE customer_id=?";
+        String sql = "UPDATE customers SET email=?, contact=?, address=? WHERE customerId=?";
         try (Connection conn = DBUtil.getConnection();PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, customer.getEmail());
             stmt.setString(2, customer.getContact());
@@ -242,7 +248,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	@Override
 	public boolean updateBalance(int customerId, double newBalance) {
 
-	    String sql = "UPDATE customer SET balance = ? WHERE customer_id = ?";
+	    String sql = "UPDATE customers SET balance = ? WHERE customerId = ?";
 
 	    try (Connection conn = DBUtil.getConnection();
 	         PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -265,7 +271,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public Customer getCustomerByAccountNo(String accountNo) {
-	    String sql = "SELECT * FROM customer WHERE account_no = ?";
+	    String sql = "SELECT * FROM customers WHERE accountNo = ?";
 	    Customer customer = new Customer();
 	    try (Connection conn = DBUtil.getConnection();
 	         PreparedStatement stmt = conn.prepareStatement(sql)) {

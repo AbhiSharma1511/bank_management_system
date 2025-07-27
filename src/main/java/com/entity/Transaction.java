@@ -1,15 +1,21 @@
 package com.entity;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 public class Transaction {
     private int transactionId;
     private String senderAccountNo;
     private String receiverAccountNo;
     private double amount;
-    private LocalDate transactionDate;
+    private Timestamp transactionTime;
 
-    // Getters and Setters
+    public Timestamp getTransactionTime() {
+		return transactionTime;
+	}
+	public void setTransactionTime(Timestamp transactionTime) {
+		this.transactionTime = transactionTime;
+	}
+	// Getters and Setters
     public int getTransactionId() {
         return transactionId;
     }
@@ -34,10 +40,5 @@ public class Transaction {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    public LocalDate getTransactionDate() {
-        return transactionDate;
-    }
-    public void setTransactionDate(LocalDate transactionDate) {
-        this.transactionDate = transactionDate;
-    }
+
 }

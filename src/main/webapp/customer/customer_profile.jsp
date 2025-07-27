@@ -15,7 +15,7 @@ body {
 
 .container {
 	max-width: 500px;
-	margin: 40px auto;
+	margin: 30px auto;
 	padding: 30px;
 	background-color: #ffffff;
 	border-radius: 12px;
@@ -118,7 +118,14 @@ button {
 	<%@ include file="navbar.html"%>
 
 	<%
-	Customer customer = (Customer) session.getAttribute("customer");
+	if(session==null || session.getAttribute("customer")==null){
+		response.sendRedirect("clogin.jsp");
+		return;
+	}
+	
+		Customer customer = (Customer) session.getAttribute("customer");
+		String updateMessage = (String)session.getAttribute("data_update_message");
+		session.removeAttribute("data_update_message");
 	%>
 
 	<div class="container">
@@ -149,8 +156,12 @@ button {
 				<label>Address</label>
 				<input type="text" name="address" value="<%=customer.getAddress()%>" disabled />
 			</div>
-
-			<div class="button-group">
+				<% if (updateMessage != null) { %>
+				  <div style="text-align: center;color: red;font-size:20px;">
+				    <p><%= updateMessage %></p>
+				  </div>
+				<% } %>
+				<div class="button-group">
 				<button type="button" id="editBtn" onclick="enableEditing()">✏
 					Edit</button>
 				<button type="submit" id="saveBtn">💾 Save</button>

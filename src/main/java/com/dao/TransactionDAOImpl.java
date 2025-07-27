@@ -1,7 +1,6 @@
 package com.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -14,14 +13,14 @@ public class TransactionDAOImpl implements TransactionDAO {
 
     @Override
     public boolean addTransaction(Transaction t) {
-    	String sql = "INSERT INTO transactions(transactionId, senderAccountNo, receiverAccountNo, amount, transactionDate) VALUES (?, ?, ?, ?, ?)";
+    	String sql = "INSERT INTO transactions(transactionId, senderAccountNo, receiverAccountNo, amount, transactionTime) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DBUtil.getConnection();PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, t.getTransactionId());
         	ps.setString(2, t.getSenderAccountNo());
             ps.setString(3, t.getReceiverAccountNo());
             ps.setDouble(4, t.getAmount());
-            ps.setDate(5, Date.valueOf(t.getTransactionDate()));
+            ps.setTimestamp(5, t.getTransactionTime());
             return ps.executeUpdate() == 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,11 +36,11 @@ public class TransactionDAOImpl implements TransactionDAO {
         try (Connection conn = DBUtil.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Transaction t = new Transaction();
-                t.setTransactionId(rs.getInt("transaction_id"));
-                t.setSenderAccountNo(rs.getString("sender_account"));
-                t.setReceiverAccountNo(rs.getString("receiver_account"));
+                t.setTransactionId(rs.getInt("transactionId"));
+                t.setSenderAccountNo(rs.getString("senderAccountNo"));
+                t.setReceiverAccountNo(rs.getString("receiverAccountNo"));
                 t.setAmount(rs.getDouble("amount"));
-                t.setTransactionDate(rs.getDate("transaction_date").toLocalDate());
+                t.setTransactionTime(rs.getTimestamp("transactionTime"));
                 list.add(t);
             }
         } catch (Exception e) {
@@ -64,7 +63,7 @@ public class TransactionDAOImpl implements TransactionDAO {
                 t.setSenderAccountNo(rs.getString("senderAccountNo"));
                 t.setReceiverAccountNo(rs.getString("receiverAccountNo"));
                 t.setAmount(rs.getDouble("amount"));
-                t.setTransactionDate(rs.getDate("transactionDate").toLocalDate());
+                t.setTransactionTime(rs.getTimestamp("transactionTime"));
                 list.add(t);
             }
         } catch (Exception e) {

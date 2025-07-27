@@ -11,7 +11,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/customer_home")
 public class CustomerHomeServlet extends HttpServlet {
@@ -20,11 +19,13 @@ public class CustomerHomeServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession(false);
 
-	    if (session == null || session.getAttribute("customer") == null) {
-	        String empIdStr = (String) session.getAttribute("customerId");
+	    if (req.getSession() == null || req.getSession().getAttribute("customerId") == null) {
+	    	resp.sendRedirect("customer/clogin.jsp");
+	    	return;
+	    }
 
+	        String empIdStr = (String) req.getSession().getAttribute("customerId");
 	        if (empIdStr != null) {
 	            try {
 	                int id = Integer.parseInt(empIdStr);
@@ -34,19 +35,17 @@ public class CustomerHomeServlet extends HttpServlet {
 	                Customer customer = customerDao.getCustomerById(id);
 
 	                if (customer != null) {
-	                    session.setAttribute("customer", customer);
+	                	req.getSession().setAttribute("customer", customer);
 	                    resp.sendRedirect("customer/customer_home.jsp");
 	                    return;
 	                }
 	            } catch (Exception ex) {
 	                ex.printStackTrace(); // log the actual cause
+	                resp.sendRedirect("customer/clogin.jsp");
 	            }
 	        }
-
-	        // If session is invalid or employee not found
-	        resp.sendRedirect("customer/clogin.htm;"); // redirect to login
-	    } else {
-	        resp.sendRedirect("customer/customer_home.jsp");
+	        else {
+	        	resp.sendRedirect("customer/clogin.jsp");
 	    }
 	}
 

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" import="java.util.*, com.entity.Transaction" %>
 <%@ page session="true" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +50,11 @@
     </style>
 </head>
 <body>
-<div><%@ include file="navbar.html" %></div>
+<%
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm a");
+	%>
+<%@ include file="navbar.html" %>
+
 <h2>Transaction History</h2>
 
 <%
@@ -82,7 +87,7 @@
             <td><%= t.getSenderAccountNo() %></td>
             <td><%= t.getReceiverAccountNo() %></td>
             <td><%= t.getAmount() %></td>
-            <td><%= t.getTransactionDate() %></td>
+            <td><%=dateFormat.format(t.getTransactionTime()) %></td>
         </tr>
     <%
         }

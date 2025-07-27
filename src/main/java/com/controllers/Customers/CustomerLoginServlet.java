@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 
 import com.dao.CustomerDAO;
 import com.dao.CustomerDAOImpl;
-import com.entity.Customer;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -23,9 +22,9 @@ public class CustomerLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    	
+
     	System.out.println("Customer Login Servlet doPost is called");
-        
+
         String id = request.getParameter("customerId");
         String password = request.getParameter("custPassword");
         System.out.println("Customer ID: " + id + ", Password: " + password);
@@ -33,8 +32,8 @@ public class CustomerLoginServlet extends HttpServlet {
         int customerId = Integer.parseInt(id);
         CustomerDAO dao = new CustomerDAOImpl();
         boolean isCustomerExist = dao.login(customerId, password);
-        
-       
+
+
         if (isCustomerExist) {
         	HttpSession oldSession = request.getSession(false);
             if (oldSession != null) {
@@ -49,7 +48,7 @@ public class CustomerLoginServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("customer/clogin.jsp"); // ✅ change path if needed
             dispatcher.forward(request, response);
         }
-        
+
     }
 
     @Override

@@ -1,10 +1,13 @@
 <%@ page import="java.util.List, com.entity.Loan"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="com.dao.LoanDAO, com.dao.LoanDAOImpl, com.entity.Loan"%>
-
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
 <title>Edit Loan Status</title>
 <style>
 body {
@@ -87,10 +90,14 @@ button:hover {
 </style>
 </head>
 <body>
-
+<%
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	%>
+<%@ include file="employee_auth.jsp" %>
 <div>
 <%@ include file="enavbar.html" %>
 </div>
+
 
 	<%
 	Loan loan = (Loan) session.getAttribute("loan");
@@ -115,11 +122,8 @@ button:hover {
 			</div>
 			<div style="display: flex; justify-content: space-between;">
 			<p>
-				Customer: <strong><%=loan.getCustomerName()%></strong>
-			</p>
-			<p>
 				Amount: <strong> ₹<%=loan.getLoanAmount()%></strong></p>
-			
+			<p>Applied Date: <strong><%= dateFormat.format(loan.getCreatedAt()) %></strong></p>
 			</div>
 
 			<label for="status">Change Status:</label> <select name="status"

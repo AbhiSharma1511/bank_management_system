@@ -1,10 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.entity.Customer, com.dao.CustomerDAO, com.dao.CustomerDAOImpl" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%
+  // Prevent caching
+  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  response.setHeader("Pragma", "no-cache");
+  response.setDateHeader("Expires", 0);
+
+  // 🔐 Session validation
+  if (session == null || session.getAttribute("employee") == null) {
+    response.sendRedirect("/Bank_Management_System/employee/login.jsp");
+    return;  // ✅ Important: stop rendering the rest of the page
+  }
+%>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+ 
 <title>Manage Customers</title>
 <style>
 body {
@@ -88,12 +103,6 @@ border-radius: 4px;
 </style>
 </head>
 <body>
-<%
-if(session==null || session.getAttribute("employee")==null){
-	response.sendRedirect("/Bank_Management_System/employee/login.jsp");
-}
-%>
-
 <%
 List<Customer> activeCustomers = null;
 List<Customer> inactiveCustomers = null;
@@ -188,6 +197,15 @@ CustomerDAO dao = new CustomerDAOImpl();
 <div id="footer"><%@ include file="footer.html" %></div>
 
 <script>
+
+
+// Detect if user used back/forward button
+window.addEventListener("pageshow", function (event) {
+  if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+    window.location.reload(); // Force session re-check
+  }
+});
+
 
 function searchTable() {
   let input = document.getElementById("searchInput").value.toLowerCase();

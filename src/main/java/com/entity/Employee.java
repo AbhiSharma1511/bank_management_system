@@ -1,5 +1,15 @@
 package com.entity;
 
+//CREATE TABLE Employees (
+//	    empId INT PRIMARY KEY ,
+//	    name VARCHAR(100),
+//	    email VARCHAR(100) UNIQUE,
+//	    password VARCHAR(100),
+//	    role VARCHAR(50),
+//	    address VARCHAR(200),
+//	    contact VARCHAR(15)
+//	);
+
 public class Employee {
 
 	private int empId;

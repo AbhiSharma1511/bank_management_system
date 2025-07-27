@@ -11,6 +11,7 @@ public interface LoanDAO {
 	    boolean updateLoanStatus(int loanId, String status);
 	    List<Loan> getLoansByCustomerId(int customerId);
 	    Loan getLoansById(int loanId);
+	    boolean deleteLoan(int loanId);
 }
 
 

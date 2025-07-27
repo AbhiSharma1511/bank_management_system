@@ -1,194 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome to MyBank</title>
-  <style>
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-    }
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Welcome to MyBank</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-    }
+		body {
+			font-family: 'Segoe UI', sans-serif;
+			background: #f9f9f9;
+			color: #333;
+			line-height: 1.6;
+		}
 
-    nav {
-      background: #007bff;
-      color: white;
-      padding: 15px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+		nav {
+			background: #003463;
+			color: white;
+			padding: 15px 70px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 
-    nav h1 {
-      font-size: 24px;
-    }
+		nav h1 {
+			font-size: 40px;
+		}
 
-    nav a {
-      color: white;
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: 500;
-    }
+		nav a {
+			color: white;
+			margin-left: 20px;
+			text-decoration: none;
+			font-weight: 500;
+			font-size: 20px;
+		}
 
-    header.hero {
-      background: linear-gradient(to right, #007bff, #00c6ff);
-      color: white;
-      padding: 80px 20px;
-      text-align: center;
-    }
+		header.hero {
+			background: linear-gradient(to right, rgb(9, 56, 247), #00c6ff);
+			color: white;
+			padding: 80px 20px;
+			text-align: center;
+		}
 
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
+		.hero h1 {
+			font-size: 3rem;
+			margin-bottom: 20px;
+		}
 
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: auto;
-    }
+		.hero p {
+			font-size: 1.2rem;
+			max-width: 600px;
+			margin: auto;
+		}
 
-    section {
-      padding: 60px 40px;
-      text-align: center;
-    }
+		section {
+			padding: 60px 40px;
+			text-align: center;
+		}
 
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: #007bff;
-    }
+		section h2 {
+			font-size: 2rem;
+			margin-bottom: 20px;
+			color: #007bff;
+		}
 
-    .services, .features {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 30px;
-    }
+		.services,
+		.features {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			gap: 30px;
+		}
 
-    .box {
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      max-width: 300px;
-      flex: 1;
-    }
+		.box {
+			background: white;
+			padding: 30px;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+			max-width: 300px;
+			flex: 1;
+		}
 
-    .box h3 {
-      margin-bottom: 10px;
-      color: #333;
-    }
+		.box h3 {
+			margin-bottom: 10px;
+			color: #333;
+		}
 
-    .btn-group {
-      margin-top: 30px;
-    }
+		.btn-group {
+			margin-top: 30px;
+		}
 
-    .btn-group a {
-      display: inline-block;
-      background: #007bff;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 6px;
-      text-decoration: none;
-      margin: 5px;
-      transition: background 0.3s;
-    }
+		.btn-group a {
+			display: inline-block;
+			background: #007bff;
+			color: white;
+			padding: 12px 25px;
+			border-radius: 6px;
+			text-decoration: none;
+			margin: 5px;
+			transition: background 0.3s;
+		}
 
-    .btn-group a:hover {
-      background: #0056b3;
-    }
+		.btn-group a:hover {
+			background: #0056b3;
+		}
 
-    footer {
-      background: #f0f0f0;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: #555;
-      margin-top: 40px;
-    }
+		footer {
+			background: #f0f0f0;
+			text-align: center;
+			padding: 20px;
+			font-size: 14px;
+			color: #555;
+			margin-top: 40px;
+		}
 
-    @media (max-width: 768px) {
-      .services, .features {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-  </style>
+		@media (max-width: 768px) {
+
+			.services,
+			.features {
+				flex-direction: column;
+				align-items: center;
+			}
+		}
+	</style>
 </head>
+
 <body>
 
-  <!-- Navbar -->
-  <nav>
-    <h1>MyBank</h1>
-    <div>
-      <a href="#services">Services</a>
-      <a href="#why">Why Us</a>
-      <a href="customer/clogin.jsp">Customer </a>
-      <a href="employee/login.html">Employee </a>
-    </div>
-  </nav>
+	<!-- Navbar -->
+	<nav>
+		<div style="display: flex; gap:5px; align-items: center;">
+			<img src=".\images\BharatBank_logo.svg" style="width:50px; height: 50px;" />
+			<h1>भारतBank</h1>
+		</div>
+		<div>
+			<a href="#services">Services</a>
+			<a href="#why">Why Us</a>
+			<a href="customer/clogin.jsp">Customer </a>
+			<a href="employee/login.jsp">Employee </a>
+		</div>
+	</nav>
 
-  <!-- Hero Section -->
-  <header class="hero">
-    <h1>Welcome to MyBank</h1>
-    <p>Secure, smart, and simple banking for everyone. Join thousands of happy customers today.</p>
+	<!-- Hero Section -->
+	<header class="hero">
+		<h1>Welcome to भारतBank</h1>
+		<p>Secure, smart, and simple banking for everyone. Join thousands of happy customers today.</p>
 
-    <div class="btn-group">
-      <a href="customer/clogin.jsp">Customer Login</a>
-      <a href="employee/login.jsp">Employee Login</a>
-    </div>
-  </header>
+		<div class="btn-group">
+			<a href="customer/clogin.jsp">Customer Login</a>
+			<a href="employee/login.jsp">Employee Login</a>
+		</div>
+	</header>
 
-  <!-- Services Section -->
-  <section id="services">
-    <h2>Our Services</h2>
-    <div class="services">
-      <div class="box">
-        <h3>Online Banking</h3>
-        <p>Access your accounts, transfer money, and pay bills anytime, anywhere.</p>
-      </div>
-      <div class="box">
-        <h3>Loans & Credit</h3>
-        <p>Apply for personal or business loans with competitive interest rates.</p>
-      </div>
-      <div class="box">
-        <h3>24/7 Support</h3>
-        <p>We’re here to help you round-the-clock with any banking needs.</p>
-      </div>
-    </div>
-  </section>
+	<!-- Services Section -->
+	<section id="services">
+		<h2>Our Services</h2>
+		<div class="services">
+			<div class="box">
+				<h3>Online Banking</h3>
+				<p>Access your accounts, transfer money, and pay bills anytime, anywhere.</p>
+			</div>
+			<div class="box">
+				<h3>Loans & Credit</h3>
+				<p>Apply for personal or business loans with competitive interest rates.</p>
+			</div>
+			<div class="box">
+				<h3>24/7 Support</h3>
+				<p>We’re here to help you round-the-clock with any banking needs.</p>
+			</div>
+		</div>
+	</section>
 
-  <!-- Why Choose Us Section -->
-  <section id="why">
-    <h2>Why Choose Us?</h2>
-    <div class="features">
-      <div class="box">
-        <h3>Trusted by Millions</h3>
-        <p>Decades of banking excellence trusted by millions across the country.</p>
-      </div>
-      <div class="box">
-        <h3>Advanced Security</h3>
-        <p>We use industry-leading security and encryption to protect your money and data.</p>
-      </div>
-      <div class="box">
-        <h3>Smart Tools</h3>
-        <p>Budget trackers, financial planning, and more right at your fingertips.</p>
-      </div>
-    </div>
-  </section>
+	<!-- Why Choose Us Section -->
+	<section id="why">
+		<h2>Why Choose Us?</h2>
+		<div class="features">
+			<div class="box">
+				<h3>Trusted by Millions</h3>
+				<p>Decades of banking excellence trusted by millions across the country.</p>
+			</div>
+			<div class="box">
+				<h3>Advanced Security</h3>
+				<p>We use industry-leading security and encryption to protect your money and data.</p>
+			</div>
+			<div class="box">
+				<h3>Smart Tools</h3>
+				<p>Budget trackers, financial planning, and more right at your fingertips.</p>
+			</div>
+		</div>
+	</section>
 
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 MyBank | Designed for a Smarter Future in Banking
-  </footer>
+	<!-- Footer -->
+	<footer>
+		&copy; 2025 MyBank | Designed for a Smarter Future in Banking
+	</footer>
 
 </body>
+
 </html>
